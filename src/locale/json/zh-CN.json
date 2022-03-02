@@ -1,0 +1,70 @@
+{
+  "Captcha": {
+    "Input": "输入验证码",
+    "Message": "输入图片验证码",
+    "VerifyCode": "验证码"
+  },
+  "Common": {
+    "Cancel": "取消",
+    "Close": "关闭",
+    "Commit": "提交",
+    "Confirm": "确认",
+    "Logout": "登出",
+    "PlaceHolder": "请输入",
+    "Refresh": "刷新",
+    "SystemName": "Wings Admin System"
+  },
+  "Locale": {
+    "en-US": "english/US",
+    "zh-CN": "中文/简体"
+  },
+  "Login": {
+    "AuthType": {
+      "email": "Email",
+      "facebook": "Facebook",
+      "github": "Github",
+      "google": "Google"
+    },
+    "CloseWindow": "关闭窗口",
+    "CopyRight": "Apache License 2.0",
+    "Failure": "登录失败",
+    "NoPermit": "无权登录",
+    "Password": "密码",
+    "PopupLabel": "弹窗",
+    "PopupTitle": "弹出新窗口",
+    "ReLogin": "请重新登录",
+    "Submit": "登录",
+    "Success": "登录成功",
+    "Username": "用户名"
+  },
+  "Menu": {
+    "MockFunction": {
+      "_": "模拟功能",
+      "AdminPermit": "管理员",
+      "DoubleKill": "防连击",
+      "NeedCaptcha": "验证码",
+      "RightEditor": "防篡改"
+    }
+  },
+  "Router": {
+    "Login": "登录",
+    "Main": "面板",
+    "MockPermit": "模拟权限",
+    "MockDoubler": "模拟连击",
+    "MockRighter": "模拟篡改",
+    "MockCaptcha": "模拟验证"
+  },
+  "Navibar": {
+    "Avatar": "{0}",
+    "Language": "语言: {0}",
+    "SwitchLocale": "切换语言",
+    "Timezone": "时区: {0}",
+    "Username": "用户名: {0}"
+  },
+  "Validator": {
+    "BadEmail": "邮件格式错误",
+    "LeastNChars": "至少 {0} 字符",
+    "RequireEmail": "需要邮箱",
+    "RequirePassword": "需要密码"
+  }
+}

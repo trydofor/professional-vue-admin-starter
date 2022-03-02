@@ -1,0 +1,70 @@
+{
+  "Captcha": {
+    "Input": "input image code",
+    "Message": "input the Captcha",
+    "VerifyCode": "the verify code"
+  },
+  "Common": {
+    "Cancel": "Cancel",
+    "Close": "Close",
+    "Commit": "Commit",
+    "Confirm": "Confirm",
+    "Logout": "Logout",
+    "PlaceHolder": "Please input",
+    "Refresh": "Refresh",
+    "SystemName": "Wings Admin System"
+  },
+  "Locale": {
+    "en-US": "english/US",
+    "zh-CN": "中文/简体"
+  },
+  "Login": {
+    "AuthType": {
+      "email": "Email",
+      "facebook": "Facebook",
+      "github": "Github",
+      "google": "Google"
+    },
+    "CloseWindow": "Please Close This Window",
+    "CopyRight": "Apache License 2.0",
+    "Failure": "failed to login",
+    "NoPermit": "no permit to login",
+    "Password": "Password",
+    "PopupLabel": "Popup",
+    "PopupTitle": "popup new window",
+    "ReLogin": "Please Login Again",
+    "Submit": "Log in",
+    "Success": "Login Successfully",
+    "Username": "Username"
+  },
+  "Menu": {
+    "MockFunction": {
+      "_": "Mock Function",
+      "AdminPermit": "Admin Permit",
+      "DoubleKill": "Double Kill",
+      "NeedCaptcha": "Need Captcha",
+      "RightEditor": "Right Editor"
+    }
+  },
+  "Router": {
+      "Login": "Login",
+      "Main": "Main",
+      "MockPermit": "Mock Permit",
+      "MockDoubler": "Mock Doubler",
+      "MockRighter": "Mock Righter",
+      "MockCaptcha": "Mock Captcha"
+  },
+  "Navibar": {
+    "Avatar": "{0}",
+    "Language": "Language: {0}",
+    "SwitchLocale": "Switch Language",
+    "Timezone": "Timezone: {0}",
+    "Username": "Username: {0}"
+  },
+  "Validator": {
+    "BadEmail": "bad email format",
+    "LeastNChars": "at least {0} chars",
+    "RequireEmail": "require an email",
+    "RequirePassword": "require a password"
+  }
+}

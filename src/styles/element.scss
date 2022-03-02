@@ -1,0 +1,19 @@
+/*
+* Element Variables
+* @see {@link https://element-plus.gitee.io/zh-CN/guide/theming.html}
+*/
+
+@forward "~element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: (
+    "primary": (
+      "base": #6E6DEF,
+    ),
+  ),
+);
+
+@use "~element-plus/theme-chalk/src/index.scss";
+
+// table head selectable
+th.el-table__cell {
+  user-select: text !important;
+}

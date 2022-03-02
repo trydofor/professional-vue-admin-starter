@@ -1,0 +1,103 @@
+body{
+  color:var(--el-text-color-regular)
+}
+
+.wg-box-wrapper {
+  background-color: #eef0f4;
+  padding: 15px 0 0 15px;
+
+  .wg-box-block {
+    padding: 15px;
+    background-color: #ffffff;
+    margin-top: 15px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .el-table{
+    width: calc(100% - 5px) !important;
+  }
+
+  th {
+    background-color: #f2f2f2 !important;
+  }
+}
+
+.wg-box-inline {
+  display: inline-block;
+}
+
+.wg-wid-full{
+  width: 100%;
+}
+//
+.wg-pda-mini{
+  padding: 15px
+}
+.wg-pdt-mini{
+  padding-top: 15px
+}
+.wg-pdb-mini{
+  padding-bottom: 15px
+}
+.wg-pdl-mini{
+  padding-left: 15px
+}
+.wg-pdr-mini{
+  padding-right: 15px
+}
+
+.wg-mga-mini {
+  margin: 15px;
+}
+.wg-mgt-mini {
+  margin-top: 15px;
+}
+.wg-mgb-mini {
+  margin-bottom: 15px;
+}
+.wg-mgl-mini {
+  margin-left: 15px;
+}
+.wg-mgr-mini {
+  margin-right: 15px;
+}
+
+.wg-mga-big {
+  margin: 30px;
+}
+.wg-mgt-big {
+  margin-top: 30px;
+}
+.wg-mgb-big {
+  margin-bottom: 30px;
+}
+.wg-mgl-big {
+  margin-left: 30px;
+}
+.wg-mgr-big {
+  margin-right: 30px;
+}
+
+.wg-bold{
+  font-weight: bold;
+}
+
+.wg-title-1{
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.wg-title-2{
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.wg-top-popper {
+  width: 200px;
+}
