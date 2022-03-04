@@ -88,7 +88,36 @@ pnpm lint
 * scoped的样式尽量简短，够用；全局的要使用特定前缀如`wg`
     -  box：为容器类，只限定定位和布局，非具体内容
     - 其他带有意义的单词，都视为实体类
-    
+
+## 代码格式化
+
+开发环境中大概存在4套格式化体系，其中有些规则会发生冲突，比如长代码断行始终是问题。
+* 编辑器 - IDE(WebStorm)或Editor(VsCode)的本身的CodeStyle
+* prettier - 分析AST全部重新输出源码，统一格式。不管如何都会格式化。
+* eslint - 根据rule格式化源码，提高代码质量。只有触发规则才会警报，甚至fix。
+* eslint-plugin-vue - Vue对EsLint的细分了很多细致规则。
+
+尽管有4套体系，但在js界，使用Prettier格式化代码，EsLint提高代码质量是共识。
+工程内采用 vue3-recommended，基于以下实践，在长代码断行上调整了默认值，使开发者
+能够在120行内，自由选择如何断行，比如html是否每标签换行，ts对象是否每key换行。
+
+* 现代显示器较大，通常一行120-160字符比较合适。
+* 逻辑代码120比较舒服，而html的标签和属性长度超过180也可接受。
+* html断行时每个属性一行，把横向痛苦，转化成纵向痛苦，更痛苦。
+
+eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和配置项。
+* https://eslint.org/docs/user-guide/configuring/configuration-files
+* https://eslint.vuejs.org/rules/
+
+在WebStorm中，如下设置Preferences`⌘,`，使其更好的格式化代码。
+
+* Keymap
+    - 取消`Reformat Code`的快捷键`⌥⌘L`
+    - 新建`Fix ESLint Problems`快捷键 `⌥⌘L`
+* Languages & Frameworks | JavaScript | Code Quality Tools | ESLint
+    - Automatic ESLint configuration
+    - Run eslint --fix on save
+
 ## 依赖说明
 
 每增加一个依赖，要说明其作用，选择依据，版本要求和注意事项，以方便升级和维护。
@@ -107,3 +136,5 @@ pnpm lint
 ### 编译依赖 DevDependencies
 
 * typescript - 与vue-cli一致。
+* eslint-config-prettier - 关闭eslint中无用或与prettier冲突的规则，放置在extends最后
+* eslint-plugin-prettier - 使用prettier作为eslint的rule

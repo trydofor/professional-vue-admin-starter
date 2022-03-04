@@ -8,8 +8,10 @@
 
 export function saveFile(blob: Blob, name: string): void {
   // native IE
-  if ('msSaveOrOpenBlob' in window.navigator) {
-    window.navigator.msSaveOrOpenBlob(blob, name);
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const navigator = window.navigator as any;
+  if (navigator.msSaveOrOpenBlob) {
+    navigator.msSaveOrOpenBlob(blob, name);
     return;
   }
 

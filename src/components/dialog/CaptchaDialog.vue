@@ -7,10 +7,14 @@
     @closed="doClose"
   >
     <el-row>
-      <el-col :span="24"><img :src="imageSrc" alt="t('Captcha.VerifyCode')" @click="doRefresh" /></el-col>
+      <el-col :span="24">
+        <img :src="imageSrc" alt="t('Captcha.VerifyCode')" @click="doRefresh" />
+      </el-col>
     </el-row>
     <el-row>
-      <el-col :span="24"><el-input v-model="verifyCode" placeholder="t('Captcha.Input')" /></el-col>
+      <el-col :span="24">
+        <el-input v-model="verifyCode" placeholder="t('Captcha.Input')" />
+      </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">

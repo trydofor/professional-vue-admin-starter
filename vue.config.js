@@ -1,7 +1,8 @@
-module.exports = {
+const { defineConfig } = require('@vue/cli-service');
+module.exports = defineConfig({
   productionSourceMap: false,
   devServer: {
-    disableHostCheck: true,
+    allowedHosts: 'all',
     proxy: {
       '/': {
         target: process.env.VUE_APP_API_URL,
@@ -12,23 +13,11 @@ module.exports = {
   },
 
   chainWebpack: config => {
-    config.module
-      .rule('images')
-      .use('url-loader')
-      .loader('url-loader')
-      .tap(options => Object.assign(options, { limit: 0 }));
-  },
-
-  configureWebpack: {
-    module: {
-      rules: [
-        {
-          test: /\.mjs$/,
-          include: /node_modules/,
-          type: 'javascript/auto',
-        },
-      ],
-    },
+    config.module.rule('images').set('parser', {
+      dataUrlCondition: {
+        maxSize: 0,
+      },
+    });
   },
 
   pluginOptions: {
@@ -42,4 +31,4 @@ module.exports = {
       fullInstall: true,
     },
   },
-};
+});

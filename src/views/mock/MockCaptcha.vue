@@ -1,5 +1,7 @@
 <template>
-  <el-button type="primary" @click="doCommit">{{ t('Common.Commit') }}</el-button>
+  <el-button type="primary" @click="doCommit">
+    {{ t('Common.Commit') }}
+  </el-button>
 </template>
 
 <script setup lang="ts">

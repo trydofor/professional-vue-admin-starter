@@ -6,7 +6,7 @@
     width="40%"
     @closed="doClose"
   >
-    <UserLogin label-position="left" :do-success="doClose"></UserLogin>
+    <UserLogin label-position="left" :do-success="doClose" />
     <OauthLogin :pop-window="true" :do-success="doClose" />
   </el-dialog>
 </template>

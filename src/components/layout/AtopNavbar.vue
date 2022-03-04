@@ -17,8 +17,9 @@
                 size="large"
                 @click="doTagClick(element)"
                 @close="doTagClose(element)"
-                >{{ t(I18nKey.router(element.name)) }}</el-tag
               >
+                {{ t(I18nKey.router(element.name)) }}
+              </el-tag>
             </el-tooltip>
           </div>
         </template>
@@ -33,9 +34,9 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item disabled>{{ t('Navibar.Username', [username]) }}</el-dropdown-item>
-            <el-dropdown-item :disabled="supportLocales.length <= 1" command="locale">{{
-              t('Navibar.Language', [t('Locale.' + language)])
-            }}</el-dropdown-item>
+            <el-dropdown-item :disabled="supportLocales.length <= 1" command="locale">
+              {{ t('Navibar.Language', [t('Locale.' + language)]) }}
+            </el-dropdown-item>
             <el-dropdown-item disabled>{{ t('Navibar.Timezone', [timezone]) }}</el-dropdown-item>
             <el-dropdown-item divided command="logout">{{ t('Common.Logout') }}</el-dropdown-item>
           </el-dropdown-menu>

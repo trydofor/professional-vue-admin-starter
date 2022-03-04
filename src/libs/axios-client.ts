@@ -86,7 +86,10 @@ export class AxiosClient {
         isAxiosError: false,
         code: 'check-duplicate',
         toJSON: () => {
-          return { success: false, message: 'duplicate request with same data' };
+          return {
+            success: false,
+            message: 'duplicate request with same data',
+          };
         },
       });
       options.interceptRejected?.(err, EjectType.Checker);
@@ -277,7 +280,12 @@ export class AxiosClient {
   private isDoubleClick(conf: AxiosRequestConfig): boolean {
     if (this.lastRequestTimestamp <= 0 || !conf.duplicateInterval || conf.duplicateInterval <= 0) return false;
 
-    const id = JSON.stringify({ method: conf.method, url: conf.url, params: conf.params, data: conf.data });
+    const id = JSON.stringify({
+      method: conf.method,
+      url: conf.url,
+      params: conf.params,
+      data: conf.data,
+    });
     const tm = Date.now();
     if (id === this.lastRequestIdentity && tm < conf.duplicateInterval + this.lastRequestTimestamp) {
       return true;

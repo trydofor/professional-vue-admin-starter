@@ -8,7 +8,7 @@
         @click="props.doIconClick?.(props.small)"
       />
     </div>
-    <RecurMenu :menus="menus"></RecurMenu>
+    <RecurMenu :menus="menus" />
   </el-menu>
 </template>
 

@@ -4,6 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { mockDoubler } from '@/apis/mock/mock-data';</script>
+import { mockDoubler } from '@/apis/mock/mock-data';
+</script>
 
 <style scoped></style>

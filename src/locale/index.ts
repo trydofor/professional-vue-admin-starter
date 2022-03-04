@@ -1,10 +1,10 @@
 import {
-    Composer,
-    createI18n,
-    LocaleMessages,
-    LocaleMessageValue,
-    useI18n as baseUseI18n,
-    VueMessageType,
+  Composer,
+  createI18n,
+  LocaleMessages,
+  LocaleMessageValue,
+  useI18n as baseUseI18n,
+  VueMessageType,
 } from 'vue-i18n';
 import { disableI18n, localeDeclare, localeDefault, localeFallback } from '@/configs/global';
 import { DateTimeSchema, MessageSchema, NumberSchema } from '@/locale/schema';

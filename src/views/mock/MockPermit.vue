@@ -3,5 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { Permit } from '@/configs/permit';</script>
+import { Permit } from '@/configs/permit';
+</script>
 <style scoped></style>

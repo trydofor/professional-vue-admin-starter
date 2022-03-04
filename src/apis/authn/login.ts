@@ -61,14 +61,19 @@ export function login(data: LoginForm, doSuccess: (result: Result<LoginData>) =>
 
 export function initPerm(doResult: (err: string) => void): void {
   const url = '/user/authed-perm.json';
-  client.dataJson<Result<string[]>>(url, { perms: Object.values(Permit), check: Required }).then(result => {
-    if (result.success) {
-      setPermit(result.data);
-    } else {
-      logger.log('check failed, perms=', result.data);
-    }
-    doResult(result.success ? '' : 'Login.NoPermit');
-  });
+  client
+    .dataJson<Result<string[]>>(url, {
+      perms: Object.values(Permit),
+      check: Required,
+    })
+    .then(result => {
+      if (result.success) {
+        setPermit(result.data);
+      } else {
+        logger.log('check failed, perms=', result.data);
+      }
+      doResult(result.success ? '' : 'Login.NoPermit');
+    });
 }
 
 export function oauth(type: string, state: string[], host: string, doSuccess: (result: Result<string>) => void): void {

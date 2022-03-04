@@ -22,7 +22,9 @@
           </el-icon>
         </i>
         <!--suppress HtmlUnknownAttribute -->
-        <template #title>{{ t(menu.title) }}</template>
+        <template #title>
+          {{ t(menu.title) }}
+        </template>
       </el-menu-item>
     </template>
   </template>
