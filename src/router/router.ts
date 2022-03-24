@@ -9,6 +9,7 @@ export const RouteName = {
   MockDoubler: 'MockDoubler',
   MockRighter: 'MockRighter',
   MockCaptcha: 'MockCaptcha',
+  MockSentry: 'MockSentry',
 } as const;
 
 export const enum MenuGroup {

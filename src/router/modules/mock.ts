@@ -47,6 +47,15 @@ const routes: RouteRecordRaw[] = [
       permit: Permit.RoleAdmin,
     },
   },
+  {
+    path: '/mock-sentry',
+    name: RouteName.MockSentry,
+    component: () => import('@/views/mock/SentryErr.vue'),
+    meta: {
+      menuGroup: MenuGroup.MockFunction,
+      menuName: menuItem(MenuGroup.MockFunction, 'SentryError'),
+    },
+  },
 ];
 
 export default routes;

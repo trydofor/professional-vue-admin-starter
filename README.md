@@ -132,9 +132,11 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * js-md5 - 密码hash，避开原文，增加复杂度
 * mitt - eventbus，全局事件总线
 * vue-i18n - 多国语，目前使用的是beta版
+* sentry - 日志收集
 
 ### 编译依赖 DevDependencies
 
 * typescript - 与vue-cli一致。
 * eslint-config-prettier - 关闭eslint中无用或与prettier冲突的规则，放置在extends最后
 * eslint-plugin-prettier - 使用prettier作为eslint的rule
+* git-revision-webpack-plugin - 生成build信息

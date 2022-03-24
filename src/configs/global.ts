@@ -46,3 +46,6 @@ export const oauthSuccess = 'oauth successfully';
 
 export const pageSize = 25;
 export const cachingView = 10;
+
+export const sentryDsn = '';
+export const sentryRate = isProduction ? 0.25 : 1.0;

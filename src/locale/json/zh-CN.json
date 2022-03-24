@@ -43,7 +43,8 @@
       "AdminPermit": "管理员",
       "DoubleKill": "防连击",
       "NeedCaptcha": "验证码",
-      "RightEditor": "防篡改"
+      "RightEditor": "防篡改",
+      "SentryError": "犯个错"
     }
   },
   "Router": {
@@ -52,7 +53,8 @@
     "MockPermit": "模拟权限",
     "MockDoubler": "模拟连击",
     "MockRighter": "模拟篡改",
-    "MockCaptcha": "模拟验证"
+    "MockCaptcha": "模拟验证",
+    "MockSentry": "错误收集"
   },
   "Navibar": {
     "Avatar": "{0}",

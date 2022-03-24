@@ -43,7 +43,8 @@
       "AdminPermit": "Admin Permit",
       "DoubleKill": "Double Kill",
       "NeedCaptcha": "Need Captcha",
-      "RightEditor": "Right Editor"
+      "RightEditor": "Right Editor",
+      "SentryError": "Sentry Error"
     }
   },
   "Router": {
@@ -52,7 +53,8 @@
       "MockPermit": "Mock Permit",
       "MockDoubler": "Mock Doubler",
       "MockRighter": "Mock Righter",
-      "MockCaptcha": "Mock Captcha"
+      "MockCaptcha": "Mock Captcha",
+      "MockSentry": "Sentry Error"
   },
   "Navibar": {
     "Avatar": "{0}",
