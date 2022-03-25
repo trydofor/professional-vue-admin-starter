@@ -57,8 +57,8 @@ const clientConfig: AxiosClientConfig = {
   interceptRequest(config) {
     const store = refStore();
     const token = store.state.authn.token;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    if (config.headers == null) config.headers = {};
+
     if (token && tokenName && tokenSend === TokenType.Header) {
       config.headers[tokenName] = token;
     }
