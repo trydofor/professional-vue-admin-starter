@@ -1,29 +1,16 @@
 <template>
-  <div class="atop-navi-box">
+  <div ref="atopDivElement" class="atop-navi-box">
     <div class="tagged-box">
-      <Draggable v-model="tagViews" tag="transition-group" :component-data="{ name: 'flip-list' }" item-key="path">
-        <template #item="{ element }">
-          <div>
-            <el-tooltip
-              class="item"
-              effect="light"
-              :content="element.path.substring(element.path.lastIndexOf('/') + 1)"
-              placement="bottom-start"
-            >
-              <el-tag
-                closable
-                :effect="tagEffect(element)"
-                style="cursor: pointer"
-                size="large"
-                @click="doTagClick(element)"
-                @close="doTagClose(element)"
-              >
-                {{ t(I18nKey.router(element.name)) }}
-              </el-tag>
-            </el-tooltip>
-          </div>
-        </template>
-      </Draggable>
+      <el-tabs
+        v-model="tabActive"
+        :style="{ width: tabsWidth + 'px' }"
+        type="card"
+        closable
+        @tab-remove="doTagClose"
+        @tab-click="doTagClick"
+      >
+        <el-tab-pane v-for="item in tagViews" :key="item.path" :label="tabLabel(item)" :name="item.path"> </el-tab-pane>
+      </el-tabs>
     </div>
     <div class="setting-box">
       <el-dropdown placement="bottom-end" popper-class="wg-top-popper" @command="doMenuCommand">
@@ -59,17 +46,16 @@
 </template>
 
 <script setup lang="ts">
-import Draggable from 'vuedraggable';
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
+import { onBeforeRouteUpdate, RouteLocationNormalized, useRoute, useRouter } from 'vue-router';
 import avatar from '@/assets/images/user.png';
 import { useStore } from '@/store';
 import { computed, onMounted, ref } from 'vue';
-import { ViewData } from '@/store/modules/caching/state';
 import { logout } from '@/apis/authn/login';
 import { switchLocale, tryInit } from '@/apis/authn/setting';
-import { pathLogin } from '@/configs/global';
+import { atopMenuWidth, atopSettingWidth, atopTabsWidth, pathLogin } from '@/configs/global';
 import { I18nKey, standardLocale, supportLocales, useI18n } from '@/locale';
 import globalEvent from '@/libs/global-event';
+import { ViewData } from '@/store/modules/caching/state';
 
 const i18n = useI18n();
 const t = i18n.t;
@@ -77,7 +63,10 @@ const router = useRouter();
 const route = useRoute();
 const store = useStore();
 
+const atopDivElement = ref<HTMLDivElement>();
 // tag view
+const tabsWidth = ref(atopTabsWidth);
+const tabActive = ref('');
 const tagViews = computed({
   get() {
     return store.state.caching.views;
@@ -87,20 +76,46 @@ const tagViews = computed({
   },
 });
 
-function tagEffect(tag: ViewData) {
-  return tag.path === route.fullPath ? 'dark' : 'plain';
-}
+globalEvent.on('SmallMenu', size => {
+  if (size) {
+    setTimeout(() => (tabsWidth.value = tabsWidth.value + atopMenuWidth), 500);
+  } else {
+    tabsWidth.value = tabsWidth.value - atopMenuWidth;
+  }
+});
 
-function doTagClick(tag: ViewData) {
-  if (route.fullPath !== tag.path) {
-    router.push(tag.path);
+function tabLabel(item: ViewData): string {
+  if (item.tips) {
+    return t(I18nKey.router(item.name), [item.tips]);
+  } else {
+    return t(I18nKey.router(item.name));
   }
 }
 
-function doTagClose(tag: ViewData) {
-  if (route.fullPath === tag.path) {
+function calcTabs(rt?: RouteLocationNormalized) {
+  const cw = atopDivElement.value?.clientWidth;
+  if (cw && cw > atopTabsWidth) {
+    tabsWidth.value = cw - atopSettingWidth;
+  }
+  if (rt) {
+    const path = rt.fullPath;
+    const tips = rt.meta.tipsFunc?.(rt);
+    store.commit('caching/addView', { path: path, name: rt.name, tips: tips });
+    tabActive.value = path;
+  }
+}
+
+function doTagClick() {
+  const path = tabActive.value;
+  if (route.fullPath !== path) {
+    router.push(path);
+  }
+}
+
+function doTagClose(path: string) {
+  if (route.fullPath === path) {
     const views = store.state.caching.views;
-    const idx = views.findIndex(it => it.path === tag.path);
+    const idx = views.findIndex(it => it.path === path);
     if (idx >= 0) {
       if (idx - 1 >= 0) {
         router.push(views[idx - 1].path);
@@ -109,12 +124,8 @@ function doTagClose(tag: ViewData) {
       }
     }
   }
-  store.commit('caching/delView', tag);
+  store.commit('caching/delView', path);
 }
-
-onBeforeRouteUpdate(to => {
-  store.commit('caching/addView', { path: to.fullPath, name: to.name });
-});
 
 // setting
 const username = computed(() => store.state.authn.name || '-');
@@ -148,7 +159,11 @@ function doLocaleChange(): void {
 
 onMounted(() => {
   tryInit();
-  store.commit('caching/addView', { path: route.fullPath, name: route.name });
+  calcTabs(route);
+});
+
+onBeforeRouteUpdate(to => {
+  calcTabs(to);
 });
 </script>
 
@@ -168,10 +183,6 @@ onMounted(() => {
   }
   span {
     margin-left: 1em;
-  }
-  .el-tag--plain:hover {
-    color: #fff;
-    background-color: var(--el-color-primary-light-4);
   }
 }
 

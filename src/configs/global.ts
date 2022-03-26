@@ -45,7 +45,12 @@ export const oauthLogin = isProduction ? [] : ['github'];
 export const oauthSuccess = 'oauth successfully';
 
 export const pageSize = 25;
-export const cachingView = 10;
+export const cachingView = 30;
+
+export const atopSettingWidth = 200;
+export const atopSmallMenu = false;
+export const atopMenuWidth = 200;
+export const atopTabsWidth = 700;
 
 export const sentryDsn = '';
 export const sentryRate = isProduction ? 0.25 : 1.0;

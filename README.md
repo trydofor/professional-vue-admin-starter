@@ -13,6 +13,8 @@ npm install -g pnpm
 
 # 初始安装 | npm install
 pnpm install
+# 移除不必要依赖
+pnpm prune
 
 # 本地代理 | npm run local
 pnpm local
@@ -24,6 +26,9 @@ pnpm build
 
 # 格式化代码 | npm run lint
 pnpm lint
+
+# 审查依赖
+pnpm audit --fix
 ```
 
 ## 编码约定
@@ -168,3 +173,8 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * [sass-loader](https://github.com/webpack-contrib/sass-loader/releases) webpack sass loader
 * [typescript](https://www.typescriptlang.org) - 与vue-cli一致
 * [vue-cli-plugin-i18n](https://github.com/intlify/vue-cli-plugin-i18n/releases) - vue-i18n的vue-cli插件
+
+### 审查依赖 audit
+
+* ansi-regex - vue-cli-plugin-i18n间接依赖，因ERR_REQUIRE_ESM无法overrides
+* missing peer - 暂时可以忽略此类警告

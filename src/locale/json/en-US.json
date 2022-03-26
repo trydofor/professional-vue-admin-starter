@@ -44,7 +44,8 @@
       "DoubleKill": "Double Kill",
       "NeedCaptcha": "Need Captcha",
       "RightEditor": "Right Editor",
-      "SentryError": "Sentry Error"
+      "SentryError": "Sentry Error",
+      "OthersTest": "Others Test"
     }
   },
   "Router": {
@@ -54,7 +55,9 @@
       "MockDoubler": "Mock Doubler",
       "MockRighter": "Mock Righter",
       "MockCaptcha": "Mock Captcha",
-      "MockSentry": "Sentry Error"
+      "MockSentry": "Mock Sentry",
+      "MockOthers": "Mock Others",
+      "MockDetail": "Detail{0}"
   },
   "Navibar": {
     "Avatar": "{0}",

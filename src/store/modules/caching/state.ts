@@ -8,6 +8,7 @@
 export interface ViewData {
   path: string;
   name: string;
+  tips?: string;
 }
 
 export interface CachingState {

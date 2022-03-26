@@ -16,6 +16,9 @@
     <el-form-item :error="loginErr">
       <el-button type="primary" class="wg-wid-full" @click="submitLogin">{{ t('Login.Submit') }}</el-button>
     </el-form-item>
+    <el-form-item v-if="!isProduction">
+      <el-button type="success" class="wg-wid-full" @click="props.doSuccess">ForTest</el-button>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -26,7 +29,7 @@ import { tryInit } from '@/apis/authn/setting';
 import { EmptyResult } from '@/apis/api-client';
 import { emptyFunction } from '@/libs/empty';
 import { useI18n } from '@/locale';
-import { passLenMin } from '@/configs/global';
+import { isProduction, passLenMin } from '@/configs/global';
 
 const props = withDefaults(
   defineProps<{

@@ -22,9 +22,10 @@ const mutations: MutationTree<CachingState> = {
       state.views.splice(0, state.views.length - cachingView);
     }
   },
-  delView: function (state, payload: ViewData) {
+  delView: function (state, payload: ViewData | string) {
     if (state.views.length <= 1) return;
-    const idx = state.views.findIndex(it => it.path === payload.path);
+    const path = typeof payload === 'string' ? payload : payload.path;
+    const idx = state.views.findIndex(it => it.path === path);
     if (idx >= 0) {
       state.views.splice(idx, 1);
     }

@@ -10,6 +10,8 @@ export const RouteName = {
   MockRighter: 'MockRighter',
   MockCaptcha: 'MockCaptcha',
   MockSentry: 'MockSentry',
+  MockOthers: 'MockOthers',
+  MockDetail: 'MockDetail',
 } as const;
 
 export const enum MenuGroup {
@@ -26,6 +28,7 @@ declare module 'vue-router' {
     menuName?: string;
     menuIcon?: string | Component;
     menuBase?: string;
+    tipsFunc?: (rt: RouteLocationNormalized) => string | null;
     permit?: string | string[];
   }
 }

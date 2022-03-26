@@ -14,6 +14,7 @@ import { isProduction } from '@/configs/global';
 // 必须定义好顶层的菜单
 export const menus: MenuItem[] = [];
 
+// must here
 if (!isProduction) {
   menus.push({
     title: MenuGroup.MockFunction,
@@ -52,6 +53,26 @@ for (const rt of children) {
       }
       top.items.push({ title: rmu, icon: icn, index: rt.path, permit: pmt });
     }
+  }
+}
+
+if (!isProduction) {
+  for (let i = 1; i <= 3; i++) {
+    const items: MenuItem[] = [];
+    for (let j = 1; j <= 9; j++) {
+      items.push({
+        title: 'Detail-' + i + '-' + j,
+        index: '/mock-detail/' + i + '-' + j,
+      });
+    }
+
+    const title = 'Menu.Test-' + i;
+    menus.push({
+      title: title,
+      icon: Opportunity,
+      index: title,
+      items: items,
+    });
   }
 }
 

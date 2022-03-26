@@ -3,7 +3,9 @@
     <login-dialog />
     <captcha-dialog />
     <div>
-      <AsideMenu :small="isCollapse" :do-icon-click="doIconClick" />
+      <el-scrollbar class="app-content-box">
+        <AsideMenu />
+      </el-scrollbar>
     </div>
     <div class="app-right-box">
       <div class="app-navbar">
@@ -21,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import AsideMenu from '@/components/layout/AsideMenu.vue';
 import AtopNavbar from '@/components/layout/AtopNavbar.vue';
 import globalEvent from '@/libs/global-event';
@@ -30,13 +31,6 @@ import LoginDialog from '@/components/dialog/LoginDialog.vue';
 import logger from '@/libs/logger';
 import CaptchaDialog from '@/components/dialog/CaptchaDialog.vue';
 import { cachingView } from '@/configs/global';
-
-// menu
-const isCollapse = ref(false);
-
-function doIconClick(small: boolean) {
-  isCollapse.value = !small;
-}
 
 // caching view 等待新版本支持matchBy key
 
@@ -83,15 +77,14 @@ globalEvent.on('Righter', err => {
 }
 
 .app-navbar {
-  height: 50px;
+  height: 40px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  line-height: 50px;
 }
 .app-content-box {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 40px);
 }
 </style>

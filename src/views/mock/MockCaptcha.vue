@@ -1,7 +1,11 @@
 <template>
-  <el-button type="primary" @click="doCommit">
-    {{ t('Common.Commit') }}
-  </el-button>
+  <div class="wg-box-wrapper">
+    <div class="wg-box-block">
+      <el-button type="primary" @click="doCommit">
+        {{ t('Common.Commit') }}
+      </el-button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

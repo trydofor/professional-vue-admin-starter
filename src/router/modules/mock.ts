@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { MenuGroup, menuItem, RouteName } from '@/router/router';
 import { Permit } from '@/configs/permit';
+import { right } from '@/libs/strings';
 
 /**
  * @file file description
@@ -50,10 +51,29 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/mock-sentry',
     name: RouteName.MockSentry,
-    component: () => import('@/views/mock/SentryErr.vue'),
+    component: () => import('@/views/mock/MockSentry.vue'),
     meta: {
       menuGroup: MenuGroup.MockFunction,
       menuName: menuItem(MenuGroup.MockFunction, 'SentryError'),
+    },
+  },
+  {
+    path: '/mock-others',
+    name: RouteName.MockOthers,
+    component: () => import('@/views/mock/MockOthers.vue'),
+    meta: {
+      menuGroup: MenuGroup.MockFunction,
+      menuName: menuItem(MenuGroup.MockFunction, 'OthersTest'),
+    },
+  },
+  {
+    path: '/mock-detail/:id',
+    name: RouteName.MockDetail,
+    component: () => import('@/views/mock/MockDetail.vue'),
+    meta: {
+      menuGroup: MenuGroup.MockFunction,
+      menuBase: menuItem(MenuGroup.MockFunction, 'OthersTest'),
+      tipsFunc: rt => right(rt.params.id, 6),
     },
   },
 ];

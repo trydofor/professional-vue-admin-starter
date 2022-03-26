@@ -2,14 +2,16 @@ body{
   color:var(--el-text-color-regular)
 }
 
+$pad: 10px;
+
 .wg-box-wrapper {
   background-color: #eef0f4;
-  padding: 15px 0 0 15px;
+  padding: $pad 0 0 $pad;
 
   .wg-box-block {
-    padding: 15px;
+    padding: $pad;
     background-color: #ffffff;
-    margin-top: 15px;
+    margin-top: $pad;
     &:first-child {
       margin-top: 0;
     }
@@ -33,51 +35,51 @@ body{
 }
 //
 .wg-pda-mini{
-  padding: 15px
+  padding: $pad
 }
 .wg-pdt-mini{
-  padding-top: 15px
+  padding-top: $pad
 }
 .wg-pdb-mini{
-  padding-bottom: 15px
+  padding-bottom: $pad
 }
 .wg-pdl-mini{
-  padding-left: 15px
+  padding-left: $pad
 }
 .wg-pdr-mini{
-  padding-right: 15px
+  padding-right: $pad
 }
 
 .wg-mga-mini {
-  margin: 15px;
+  margin: $pad;
 }
 .wg-mgt-mini {
-  margin-top: 15px;
+  margin-top: $pad;
 }
 .wg-mgb-mini {
-  margin-bottom: 15px;
+  margin-bottom: $pad;
 }
 .wg-mgl-mini {
-  margin-left: 15px;
+  margin-left: $pad;
 }
 .wg-mgr-mini {
-  margin-right: 15px;
+  margin-right: $pad;
 }
 
 .wg-mga-big {
-  margin: 30px;
+  margin: 2 * $pad;
 }
 .wg-mgt-big {
-  margin-top: 30px;
+  margin-top: 2 * $pad;
 }
 .wg-mgb-big {
-  margin-bottom: 30px;
+  margin-bottom: 2 * $pad;
 }
 .wg-mgl-big {
-  margin-left: 30px;
+  margin-left: 2 * $pad;
 }
 .wg-mgr-big {
-  margin-right: 30px;
+  margin-right: 2 * $pad;
 }
 
 .wg-bold{

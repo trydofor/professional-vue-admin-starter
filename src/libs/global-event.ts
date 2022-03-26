@@ -13,6 +13,7 @@ import { AxiosError } from 'axios';
  */
 export type Events = {
   SetLocale: string;
+  SmallMenu: boolean;
   Failure: Error;
   ApiError: AxiosError;
   NetError: AxiosError;

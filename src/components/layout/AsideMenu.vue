@@ -1,11 +1,11 @@
 <template>
-  <el-menu :collapse="small" :default-active="active" @select="doMenuSelect">
+  <el-menu :collapse="collapse" :default-active="active" @select="doMenuSelect">
     <div class="menu-logo-box">
       <img
         src="@/assets/images/logo.png"
-        :class="{ 'menu-logo-click': doIconClick, 'menu-logo-small': small }"
+        :class="{ 'menu-logo-click': true, 'menu-logo-small': collapse }"
         alt=""
-        @click="props.doIconClick?.(props.small)"
+        @click="doIconClick()"
       />
     </div>
     <RecurMenu :menus="menus" />
@@ -14,15 +14,12 @@
 
 <script setup lang="ts">
 import RecurMenu from './RecurMenu.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { menus } from '@/configs/menu';
 import logger from '@/libs/logger';
-
-const props = defineProps<{
-  small: boolean;
-  doIconClick?: (small: boolean) => void;
-}>();
+import globalEvent from '@/libs/global-event';
+import { atopSmallMenu } from '@/configs/global';
 
 const router = useRouter();
 const route = useRoute();
@@ -41,6 +38,14 @@ const active = computed(() => {
   }
   return '';
 });
+
+const collapse = ref(atopSmallMenu);
+
+function doIconClick() {
+  const rev = !collapse.value;
+  collapse.value = rev;
+  globalEvent.emit('SmallMenu', rev);
+}
 
 function doMenuSelect(index: string, indexPath: string[]): void {
   const top = indexPath[0];

@@ -1,5 +1,9 @@
 <template>
-  <el-button type="primary" @click="throwError">TestError</el-button>
+  <div class="wg-box-wrapper">
+    <div class="wg-box-block">
+      <el-button type="primary" @click="throwError">TestError</el-button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
