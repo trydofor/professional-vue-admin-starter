@@ -1,15 +1,23 @@
 <template>
-  <el-menu :collapse="collapse" :default-active="active" @select="doMenuSelect">
-    <div class="menu-logo-box">
-      <img
-        src="@/assets/images/logo.png"
-        :class="{ 'menu-logo-click': true, 'menu-logo-small': collapse }"
-        alt=""
-        @click="doIconClick()"
-      />
-    </div>
-    <RecurMenu :menus="menus" />
-  </el-menu>
+  <div :class="{ 'menu-logo-box': true, 'menu-logo-box-small': collapse }">
+    <img
+      src="@/assets/images/logo.png"
+      :class="{ 'menu-logo-click': true, 'menu-logo-small': collapse }"
+      alt=""
+      @click="doIconClick()"
+    />
+  </div>
+  <el-scrollbar ref="menuScrollBar" class="menu-scroll-bar">
+    <el-menu
+      :collapse="collapse"
+      :default-active="active"
+      @select="doMenuSelect"
+      @open="doMenuOpen"
+      @close="doMenuClose"
+    >
+      <RecurMenu :menus="menus" />
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">
@@ -23,18 +31,48 @@ import { atopSmallMenu } from '@/configs/global';
 
 const router = useRouter();
 const route = useRoute();
+const menuScrollBar = ref();
+const hwt = 50;
+const tof = -400;
 
 const active = computed(() => {
-  const top = route.meta.menuGroup as string;
-  const grp = menus.find(it => it.title === top);
-  if (grp?.items) {
-    const til = route.meta?.menuName || route.meta?.menuBase;
-    for (const s of grp.items) {
-      if (s.title === til) {
-        logger.debug('menu active', s);
-        return s.index;
+  const path = route.fullPath;
+  const ttl = route.meta?.menuName || route.meta?.menuBase;
+  let pthPx = tof;
+  let ttlPx = tof;
+  let tmd = null;
+
+  for (const lv1 of menus) {
+    const opd = menuOpened.has(lv1.index);
+    pthPx += hwt;
+    if (tmd == null) {
+      ttlPx += hwt;
+    }
+    const its = lv1.items;
+    if (its && its.length > 0) {
+      for (const lv2 of its) {
+        if (opd) {
+          pthPx += hwt;
+          if (tmd == null) {
+            ttlPx += hwt;
+          }
+        }
+        if (lv2.index === path) {
+          logger.debug('menu active by path', path, pthPx);
+          menuScrollBar.value?.setScrollTop(pthPx);
+          return lv2.index;
+        }
+
+        if (tmd == null && lv2.title === ttl) {
+          tmd = lv2.index;
+        }
       }
     }
+  }
+  if (tmd) {
+    logger.debug('menu active by title', tmd, ttlPx);
+    menuScrollBar.value?.setScrollTop(ttlPx);
+    return tmd;
   }
   return '';
 });
@@ -61,20 +99,51 @@ function doMenuSelect(index: string, indexPath: string[]): void {
     }
   }
 }
+
+const menuOpened = new Set<string>();
+function doMenuOpen(index: string) {
+  menuOpened.add(index);
+  let pthPx = -hwt;
+  for (const lv1 of menus) {
+    if (lv1.index === index) {
+      setTimeout(() => menuScrollBar.value?.setScrollTop(pthPx), 500);
+      return;
+    }
+    pthPx += hwt;
+    const its = lv1.items;
+    if (its && menuOpened.has(lv1.index)) {
+      pthPx += hwt * its.length;
+    }
+  }
+}
+
+function doMenuClose(index: string) {
+  menuOpened.delete(index);
+}
 </script>
 
 <style lang="scss" scoped>
 .menu-logo-box {
   position: relative;
-  padding: 10px 15px 5px 15px;
+  border-right: solid 1px var(--el-border-color);
 
   img {
+    padding: 10px 15px 5px 15px;
     max-height: 30px;
     max-width: 200px;
   }
 }
+
+.menu-logo-box-small {
+  width: 63px;
+}
+
 .menu-logo-click {
   cursor: pointer;
+}
+
+.menu-scroll-bar {
+  height: calc(100vh - var(--wg-navbar-height) - 10px);
 }
 
 .menu-logo-small {

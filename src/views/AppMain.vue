@@ -3,9 +3,7 @@
     <login-dialog />
     <captcha-dialog />
     <div>
-      <el-scrollbar class="app-content-box">
-        <AsideMenu />
-      </el-scrollbar>
+      <AsideMenu />
     </div>
     <div class="app-right-box">
       <div class="app-navbar">
@@ -77,7 +75,7 @@ globalEvent.on('Righter', err => {
 }
 
 .app-navbar {
-  height: 40px;
+  height: var(--wg-navbar-height);
   overflow: hidden;
   position: relative;
   background: #fff;
@@ -85,6 +83,6 @@ globalEvent.on('Righter', err => {
 }
 .app-content-box {
   width: 100%;
-  height: calc(100vh - 40px);
+  height: calc(100vh - var(--wg-navbar-height) - 10px);
 }
 </style>
