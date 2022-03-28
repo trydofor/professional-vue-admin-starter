@@ -4,6 +4,7 @@
  * @since 2021-10-12
  * @see {@link http://github.com/trydofor | trydofor}
  */
+import { MenuItem } from '@/components/layout/AsideMenu';
 
 export interface ViewData {
   path: string;
@@ -13,4 +14,5 @@ export interface ViewData {
 
 export interface CachingState {
   views: ViewData[];
+  menus: MenuItem[];
 }

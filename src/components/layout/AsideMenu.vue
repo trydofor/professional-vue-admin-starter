@@ -15,7 +15,7 @@
       @open="doMenuOpen"
       @close="doMenuClose"
     >
-      <RecurMenu :menus="menus" />
+      <RecurMenu :menus="store.state.caching.menus" />
     </el-menu>
   </el-scrollbar>
 </template>
@@ -24,16 +24,17 @@
 import RecurMenu from './RecurMenu.vue';
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { menus } from '@/configs/menu';
 import logger from '@/libs/logger';
 import globalEvent from '@/libs/global-event';
 import { atopSmallMenu } from '@/configs/global';
+import { useStore } from '@/store';
 
 const router = useRouter();
 const route = useRoute();
 const menuScrollBar = ref();
 const hwt = 50;
 const tof = -400;
+const store = useStore();
 
 const active = computed(() => {
   const path = route.fullPath;
@@ -42,7 +43,7 @@ const active = computed(() => {
   let ttlPx = tof;
   let tmd = null;
 
-  for (const lv1 of menus) {
+  for (const lv1 of store.state.caching.menus) {
     const opd = menuOpened.has(lv1.index);
     pthPx += hwt;
     if (tmd == null) {
@@ -87,7 +88,7 @@ function doIconClick() {
 
 function doMenuSelect(index: string, indexPath: string[]): void {
   const top = indexPath[0];
-  const grp = menus.find(it => it.index === top);
+  const grp = store.state.caching.menus.find(it => it.index === top);
   //logger.debug(index, indexPath, menus, top, grp);
   if (grp?.items) {
     for (const sub of grp.items) {
@@ -104,7 +105,7 @@ const menuOpened = new Set<string>();
 function doMenuOpen(index: string) {
   menuOpened.add(index);
   let pthPx = -hwt;
-  for (const lv1 of menus) {
+  for (const lv1 of store.state.caching.menus) {
     if (lv1.index === index) {
       setTimeout(() => menuScrollBar.value?.setScrollTop(pthPx), 500);
       return;

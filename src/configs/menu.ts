@@ -56,24 +56,4 @@ for (const rt of children) {
   }
 }
 
-if (!isProduction) {
-  for (let i = 1; i <= 3; i++) {
-    const items: MenuItem[] = [];
-    for (let j = 1; j <= 9; j++) {
-      items.push({
-        title: 'Detail-' + i + '-' + j,
-        index: '/mock-detail/' + i + '-' + j,
-      });
-    }
-
-    const title = 'Menu.Test-' + i;
-    menus.push({
-      title: title,
-      icon: Opportunity,
-      index: title,
-      items: items,
-    });
-  }
-}
-
 logger.debug('menus', menus);

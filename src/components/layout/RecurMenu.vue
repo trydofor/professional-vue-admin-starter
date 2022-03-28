@@ -11,6 +11,7 @@
             </el-icon>
           </i>
           <span>{{ t(menu.title) }}</span>
+          <el-badge class="menu-badge" :value="badgeValue(menu)" :hidden="badgeHidden(menu)" :type="badgeType(menu)" />
         </template>
         <RecurMenu :menus="menu.items"></RecurMenu>
       </el-sub-menu>
@@ -23,7 +24,8 @@
         </i>
         <!--suppress HtmlUnknownAttribute -->
         <template #title>
-          {{ t(menu.title) }}
+          <span>{{ t(menu.title) }}</span>
+          <el-badge class="menu-badge" :value="badgeValue(menu)" :hidden="badgeHidden(menu)" :type="badgeType(menu)" />
         </template>
       </el-menu-item>
     </template>
@@ -43,10 +45,27 @@ const { t } = useI18n();
 function isImgIcon(icon?: unknown) {
   return typeof icon === 'string';
 }
+
+function badgeValue(menu: MenuItem): string | number {
+  if (menu.badge && menu.badge.value) {
+    return menu.badge.value;
+  }
+  return 0;
+}
+function badgeType(menu: MenuItem): string {
+  return menu.badge?.type || 'info';
+}
+function badgeHidden(menu: MenuItem) {
+  return !(menu.badge && menu.badge.value);
+}
 </script>
 
 <style lang="scss">
 .menu-image-icon {
   width: 1em;
+}
+.menu-badge {
+  top: -1em;
+  left: 0.2em;
 }
 </style>
