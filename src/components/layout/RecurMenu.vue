@@ -10,7 +10,7 @@
               <component :is="menu.icon" />
             </el-icon>
           </i>
-          <span>{{ t(menu.title) }}</span>
+          <span>{{ t(menu.title, menu.param) }}</span>
           <el-badge class="menu-badge" :value="badgeValue(menu)" :hidden="badgeHidden(menu)" :type="badgeType(menu)" />
         </template>
         <RecurMenu :menus="menu.items"></RecurMenu>
@@ -24,7 +24,7 @@
         </i>
         <!--suppress HtmlUnknownAttribute -->
         <template #title>
-          <span>{{ t(menu.title) }}</span>
+          <span>{{ t(menu.title, menu.param) }}</span>
           <el-badge class="menu-badge" :value="badgeValue(menu)" :hidden="badgeHidden(menu)" :type="badgeType(menu)" />
         </template>
       </el-menu-item>

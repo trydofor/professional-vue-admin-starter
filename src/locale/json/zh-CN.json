@@ -45,7 +45,8 @@
       "NeedCaptcha": "验证码",
       "RightEditor": "防篡改",
       "SentryError": "犯个错",
-      "OthersTest": "其他的"
+      "OthersTest": "其他的",
+      "DynamicAdd": "动态{key}"
     }
   },
   "Router": {
@@ -56,8 +57,7 @@
     "MockRighter": "模拟篡改",
     "MockCaptcha": "模拟验证",
     "MockSentry": "错误收集",
-    "MockOthers": "其他测试",
-    "MockDetail": "详情{0}"
+    "MockOthers": "其他测试"
   },
   "Navibar": {
     "Avatar": "{0}",

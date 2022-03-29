@@ -3,10 +3,6 @@ import { Component } from 'vue';
 export interface MenuBadge {
   value: string | number;
   type: 'primary' | 'success' | 'warning' | 'danger' | 'info';
-  /**
-   * menu's index
-   */
-  index?: string;
 }
 
 export interface MenuItem {
@@ -16,4 +12,5 @@ export interface MenuItem {
   items?: MenuItem[];
   permit?: string[];
   badge?: MenuBadge;
+  param?: Record<string, unknown>;
 }

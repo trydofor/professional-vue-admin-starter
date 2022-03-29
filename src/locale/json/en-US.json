@@ -45,7 +45,8 @@
       "NeedCaptcha": "Need Captcha",
       "RightEditor": "Right Editor",
       "SentryError": "Sentry Error",
-      "OthersTest": "Others Test"
+      "OthersTest": "Others Test",
+      "DynamicAdd": "Dynamic {key}"
     }
   },
   "Router": {

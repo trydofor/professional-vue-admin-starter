@@ -10,3 +10,17 @@ export function ciGet<T>(obj: any, key: string, els: T): T {
   }
   return els;
 }
+
+export function copyTruthy<T>(from: T, to: T): boolean {
+  if (!from) return false;
+
+  let fd = false;
+  for (const k in from) {
+    if (from[k]) {
+      to[k] = from[k];
+      fd = true;
+    }
+  }
+
+  return fd;
+}

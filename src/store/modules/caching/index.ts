@@ -8,12 +8,13 @@ import { Module, MutationTree } from 'vuex';
 import type { RootState } from '@/store/state';
 import { CachingState, ViewData } from './state';
 import { cachingView } from '@/configs/global';
-import { menus } from '@/configs/menu';
-import { MenuBadge, MenuItem } from '@/components/layout/AsideMenu';
+import { menus, recurRaw } from '@/configs/menu';
+import { MenuItem } from '@/components/layout/AsideMenu';
+import { copyTruthy } from '@/libs/objects';
 
 const state: CachingState = {
   views: [] as ViewData[],
-  menus: menus,
+  menus: recurRaw(menus),
 };
 
 const mutations: MutationTree<CachingState> = {
@@ -36,37 +37,43 @@ const mutations: MutationTree<CachingState> = {
   setView: function (state, payload: ViewData[]) {
     state.views = payload;
   },
-  addMenu: function (state, payload: MenuItem) {
-    state.menus.push(payload);
+  addMenu: function (state, payload: MenuItem[]) {
+    state.menus.push(...recurRaw(payload));
   },
   delMenu: function (state, payload: MenuItem | string) {
     if (state.menus.length <= 0) return;
-    const path = typeof payload === 'string' ? payload : payload.index;
-    const idx = state.menus.findIndex(it => it.index === path);
-    if (idx >= 0) {
-      state.menus.splice(idx, 1);
-    }
+    const index = typeof payload === 'string' ? payload : payload.index;
+    recurFind(state.menus, index, undefined);
   },
-  setMenuBadge: function (state, payload: MenuBadge) {
-    if (state.menus.length <= 0) return;
-    const menu = recurFind(state.menus, payload.index);
-    if (menu) menu.badge = payload;
+  setMenu: function (state, payload: MenuItem) {
+    recurFind(state.menus, payload.index, payload);
   },
 };
 
-function recurFind(items: MenuItem[], index?: string): MenuItem | null {
+function recurFind(items: MenuItem[], index?: string, rep?: MenuItem): MenuItem | null {
   if (!index) return null;
 
-  for (const it of items) {
+  let idx = -1;
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
     if (it.index === index) {
-      return it;
+      idx = i;
+      break;
     }
     if (it.items) {
-      const fd = recurFind(it.items, index);
+      const fd = recurFind(it.items, index, rep);
       if (fd) return fd;
     }
   }
-  return null;
+
+  if (idx < 0) return null;
+  const it = items[idx];
+  if (rep == null) {
+    items.splice(idx, 1);
+    return it;
+  }
+  copyTruthy(rep, it);
+  return it;
 }
 
 export const cachingModule: Module<CachingState, RootState> = {

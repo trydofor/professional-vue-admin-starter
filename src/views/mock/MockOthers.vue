@@ -44,19 +44,23 @@ function onAddMenu() {
   menuCount++;
   const items: MenuItem[] = [];
   for (let j = 1; j <= 9; j++) {
+    const pam = menuCount + '-' + j;
     items.push({
-      title: 'Detail-' + menuCount + '-' + j,
-      index: '/mock-detail/' + menuCount + '-' + j,
+      title: 'Menu.MockFunction.DynamicAdd',
+      param: { key: pam },
+      index: '/mock-detail/' + pam,
     });
   }
 
-  const index = 'Menu.Test-' + menuCount;
-  store.commit('caching/addMenu', {
-    title: index,
-    icon: Opportunity,
-    index: index,
-    items: items,
-  });
+  store.commit('caching/addMenu', [
+    {
+      title: 'Menu.MockFunction.DynamicAdd',
+      icon: Opportunity,
+      param: { key: menuCount },
+      index: 'Menu.Test-' + menuCount,
+      items: items,
+    },
+  ]);
 }
 
 function onDelMenu() {
@@ -73,10 +77,12 @@ function onMenuBadge(step: number) {
   badgeCount += step;
   const value = step == 0 ? badgeValue.value : badgeCount;
   badgeType.value = types[Math.abs(badgeCount % types.length)];
-  store.commit('caching/setMenuBadge', {
+  store.commit('caching/setMenu', {
     index: '/mock-others',
-    value: value,
-    type: badgeType.value,
+    badge: {
+      value: value,
+      type: badgeType.value,
+    },
   });
 }
 

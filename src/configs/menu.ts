@@ -10,7 +10,7 @@ import { MenuGroup } from '@/router/router';
 import logger from '@/libs/logger';
 import { Opportunity } from '@element-plus/icons-vue';
 import { isProduction } from '@/configs/global';
-
+import { markRaw } from 'vue';
 // 必须定义好顶层的菜单
 export const menus: MenuItem[] = [];
 
@@ -54,6 +54,19 @@ for (const rt of children) {
       top.items.push({ title: rmu, icon: icn, index: rt.path, permit: pmt });
     }
   }
+}
+
+export function recurRaw(menus: MenuItem[]): MenuItem[] {
+  for (const menu of menus) {
+    const icn = menu.icon;
+    if (icn && typeof icn !== 'string') {
+      menu.icon = markRaw(icn);
+    }
+    if (menu.items) {
+      recurRaw(menu.items);
+    }
+  }
+  return menus;
 }
 
 logger.debug('menus', menus);
