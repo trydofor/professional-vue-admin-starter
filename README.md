@@ -8,7 +8,11 @@
 ## 常用命令
 
 ```bash
-# 包管理推荐顺序 pnpm > yarn1 > npm
+# 使用 nvm 管理 node 版本 | https://github.com/nvm-sh/nvm
+nvm install v16
+# 使用 nrm 管理 npm 源 | npm install -g nrm
+npm install -g nrm
+# 此项目的包管理推荐顺序 pnpm > yarn1 > npm
 npm install -g pnpm
 
 # 初始安装 | npm install
@@ -116,12 +120,17 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 
 在WebStorm中，如下设置Preferences`⌘,`，使其更好的格式化代码。
 
-* Keymap
+* Keymap 推荐
     - 取消`Reformat Code`的快捷键`⌥⌘L`
     - 新建`Fix ESLint Problems`快捷键 `⌥⌘L`
 * Languages & Frameworks | JavaScript | Code Quality Tools | ESLint
-    - Automatic ESLint configuration
-    - Run eslint --fix on save
+    - Automatic ESLint configuration 选中
+    - Run eslint --fix on save 选中
+* Preferences | Languages & Frameworks | JavaScript | Prettier
+    - On Save 选中
+* Preferences | Editor | Code Style
+    - Detect and use existing file indents for editing 选中
+    - Enable EditorConfig support 选中
 
 ## 依赖说明
 

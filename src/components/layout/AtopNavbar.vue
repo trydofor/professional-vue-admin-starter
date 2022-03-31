@@ -159,7 +159,7 @@ function doLocaleChange(): void {
 
 onMounted(() => {
   tryInit();
-  calcTabs(route);
+  setTimeout(() => calcTabs(route), 500);
 });
 
 onBeforeRouteUpdate(to => {

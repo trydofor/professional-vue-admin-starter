@@ -87,6 +87,10 @@ const clientConfig: AxiosClientConfig = {
       store.commit('authn/captcha', {});
     }
     const result = response.data;
+    if (result == null) {
+      return response;
+    }
+
     if (result.success === false) {
       globalEvent.emit('Failure', new Error(result?.message || 'failure in response result'));
     }
