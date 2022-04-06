@@ -1,11 +1,11 @@
-# Wings管理端
+# 0.Wings管理端
 
 * [typescript 4.x](https://www.typescriptlang.org/)
 * [vue 3.x](https://vuejs.org/)
 * [element-plus 2.x](https://element-plus.org/)
 * [vue-i18n 9.x](https://vue-i18n.intlify.dev/)
 
-## 常用命令
+## 1.常用命令
 
 ```bash
 # 使用 nvm 管理 node 版本 | https://github.com/nvm-sh/nvm
@@ -35,7 +35,7 @@ pnpm lint
 pnpm audit --fix
 ```
 
-## 编码约定
+## 2.编码约定
 
 以lint的规则和[vue style-guide](https://vuejs.org/style-guide/)为基础，
 增加以下编辑约定，基本原则是强类型，可读性，一致性。
@@ -98,7 +98,7 @@ pnpm audit --fix
     -  box：为容器类，只限定定位和布局，非具体内容
     - 其他带有意义的单词，都视为实体类
 
-## 代码格式化
+## 3.代码格式化
 
 开发环境中大概存在4套格式化体系，其中有些规则会发生冲突，比如长代码断行始终是问题。
 * 编辑器 - IDE(WebStorm)或Editor(VsCode)的本身的CodeStyle
@@ -118,6 +118,8 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * https://eslint.org/docs/user-guide/configuring/configuration-files
 * https://eslint.vuejs.org/rules/
 
+### 3.1.WebStorm格式
+
 在WebStorm中，如下设置Preferences`⌘,`，使其更好的格式化代码。
 
 * Keymap 推荐
@@ -126,13 +128,31 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * Languages & Frameworks | JavaScript | Code Quality Tools | ESLint
     - Automatic ESLint configuration 选中
     - Run eslint --fix on save 选中
+    - Run for files `{**/*,*}.{js,ts,jsx,tsx,html,vue}`
 * Preferences | Languages & Frameworks | JavaScript | Prettier
+    - On 'Reformat Code' action
     - On Save 选中
+    - Run for files 同ESLint一致
 * Preferences | Editor | Code Style
     - Detect and use existing file indents for editing 选中
     - Enable EditorConfig support 选中
 
-## 依赖说明
+### 3.2.WebStorm插件
+
+不用安装`Save Actions`插件，它会破坏IDE自身功能，产生循环格式化和检查错误。
+
+* Easy I18n - 可以对照编辑i18n消息
+* I18n Ally - 编程环境下智能提醒
+* GitBoolBox - git自动提醒
+* Git Commit Guide - git提交Emoji
+* Any to JSON - 转成json
+* json2ts - 到ts类型
+* Indent Rainbow - 彩虹缩进
+* Rainbow Brackets - 彩虹括号
+* String Manipulation - 字符串功能
+* Grep Console - 控制台过滤
+
+## 4.依赖说明
 
 因json格式天然不能注释，且npm体系内目前没有优雅解，需要以文档形式标注。
 每增加一个依赖，要说明其作用，选择依据，版本要求和注意事项，以方便升级和维护。
@@ -143,7 +163,7 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * antd圣诞节彩蛋事件，2018个人问题
 * node-ipc工具链投毒，2022政治问题
 
-### 运行依赖 Dependencies
+### 4.1.运行依赖 Dependencies
 
 * [element-plus](https://github.com/element-plus/element-plus/releases) - 目前2.1.x，组件化完整，ts程度高
 * [icons-vue](https://github.com/element-plus/element-plus-icons/releases) - element-plus的icon分包
@@ -161,7 +181,7 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * [vue-router](https://github.com/vuejs/router/releases) - vue router
 * [vuex](https://github.com/vuejs/vuex/releases) - vuex
 
-### 编译依赖 DevDependencies
+### 4.2.编译依赖 DevDependencies
 
 * [@intlify/vue-i18n-loader](https://github.com/intlify/bundle-tools/releases) vue-i18n loader
 * @types/* - 各包的 ts 类型声明
@@ -183,7 +203,31 @@ eslint规则覆盖规则为，truthy时全覆盖，而非merge，包括级别和
 * [typescript](https://www.typescriptlang.org) - 与vue-cli一致
 * [vue-cli-plugin-i18n](https://github.com/intlify/vue-cli-plugin-i18n/releases) - vue-i18n的vue-cli插件
 
-### 审查依赖 audit
+### 4.3.审查依赖 audit
 
 * ansi-regex - vue-cli-plugin-i18n间接依赖，因ERR_REQUIRE_ESM无法overrides
 * missing peer - 暂时可以忽略此类警告
+
+
+### 4.4.全局安装与镜像 global/mirror
+
+较难获取的module，需要设置镜像，并建议global安装，以下是常用的镜像设置。
+参考https://npmmirror.com/ 及各个工具包提供的mirror变量说明
+
+```bash
+# 使用淘宝镜像
+nrm use taobao
+# 设置依赖安装过程中内部模块下载Node的镜像
+npm config set disturl https://npmmirror.com/mirrors/node/
+# 其他资源镜像，字母顺序搜集，等同于编辑 ~/.npmrc
+npm config set chromedriver_cdnurl https://npmmirror.com/mirrors/chromedriver/
+npm config set electron_builder_binaries_mirror http://npm.taobao.org/mirrors/electron-builder-binaries/
+npm config set electron_mirror https://npmmirror.com/mirrors/electron/
+npm config set phantomjs_cdnurl https://npmmirror.com/mirrors/phantomjs/
+npm config set puppeteer_download_host https://npmmirror.com/mirrors/
+npm config set python_mirror https://npmmirror.com/mirrors/python/
+npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass/
+npm config set sentrycli_cdnurl https://npmmirror.com/mirrors/sentry-cli/
+npm config set sharp_dist_base_url https://npmmirror.com/mirrors/sharp-libvips/
+npm config set sqlite3_binary_site https://npmmirror.com/mirrors/sqlite3/
+```
