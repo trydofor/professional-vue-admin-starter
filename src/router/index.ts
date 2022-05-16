@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from 'vue-router';
 import { pathLogin } from '@/configs/global';
-import { RouteName } from '@/router/router';
+import { RouteName, RouteQuery } from '@/router/router';
 
 const paths = new Set<string>();
 const modules = require.context('./modules/', true, /\.ts$/);
@@ -23,7 +23,7 @@ for (const fn of modules.keys()) {
 //
 export const routes: RouteRecordRaw[] = [
   {
-    path: '/login',
+    path: pathLogin,
     name: RouteName.Login,
     component: () => import('@/views/AppLogin.vue'),
   },
@@ -33,6 +33,10 @@ export const routes: RouteRecordRaw[] = [
     redirect: pathLogin,
     component: () => import('@/views/AppMain.vue'),
     children,
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: { path: pathLogin, query: { error: RouteQuery.NotFound } },
   },
 ];
 

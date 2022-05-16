@@ -29,6 +29,9 @@ import { oauthSuccess, pathIndex } from '@/configs/global';
 import { onMounted, ref } from 'vue';
 import { messageOpener } from '@/libs/popup-window';
 import { useI18n } from '@/locale';
+import { RouteQuery } from '@/router/router';
+import { ElMessageBox } from 'element-plus';
+import globalEvent from '@/libs/global-event';
 
 const { t } = useI18n();
 
@@ -43,10 +46,22 @@ function doClose() {
 }
 
 onMounted(() => {
-  if (window.location.hash.includes('success')) {
+  const hash = window.location.hash;
+  if (hash.includes(RouteQuery.Success)) {
     success.value = true;
     doClose();
+  } else if (hash.includes(RouteQuery.NotFound)) {
+    ElMessageBox.alert(t('Error.NotFound404'), 'Warning');
+  } else if (hash.includes(RouteQuery.BadGateway)) {
+    ElMessageBox.alert(t('Error.BadGateway502'), 'Warning');
   }
+});
+
+globalEvent.on('ApiError', err => {
+  ElMessageBox.alert(err.message, 'Warning');
+});
+globalEvent.on('BadGateway', () => {
+  ElMessageBox.alert(t('Error.BadGateway502'), 'Warning');
 });
 </script>
 

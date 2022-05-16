@@ -29,8 +29,10 @@ import LoginDialog from '@/components/dialog/LoginDialog.vue';
 import logger from '@/libs/logger';
 import CaptchaDialog from '@/components/dialog/CaptchaDialog.vue';
 import { cachingView } from '@/configs/global';
+import { useI18n } from '@/locale';
 
 // caching view 等待新版本支持matchBy key
+const { t } = useI18n();
 
 // global event
 globalEvent.on('Failure', err => {
@@ -56,6 +58,10 @@ globalEvent.on('NoPerms', err => {
 globalEvent.on('Righter', err => {
   logger.info('Righter', err);
   ElMessage.warning('invalid editor data');
+});
+globalEvent.on('BadGateway', err => {
+  logger.info('BadGateway', err);
+  ElMessage.warning(t('Error.BadGateway502'));
 });
 </script>
 

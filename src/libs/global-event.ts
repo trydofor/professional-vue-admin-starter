@@ -15,6 +15,7 @@ export type Events = {
   SetLocale: string;
   SmallMenu: boolean;
   Failure: Error;
+  BadGateway: Error;
   ApiError: AxiosError;
   NetError: AxiosError;
   DblError: AxiosError;

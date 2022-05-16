@@ -14,6 +14,12 @@ export const RouteName = {
   MockDetail: 'MockDetail',
 } as const;
 
+export const RouteQuery = {
+  Success: 'success',
+  NotFound: 'NotFound404',
+  BadGateway: 'BadGateway502',
+} as const;
+
 export const enum MenuGroup {
   MockFunction = 'Menu.MockFunction._',
 }

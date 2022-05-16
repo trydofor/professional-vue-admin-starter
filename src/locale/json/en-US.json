@@ -14,6 +14,10 @@
     "Refresh": "Refresh",
     "SystemName": "Wings Admin System"
   },
+  "Error": {
+    "NotFound404": "Page Not Found, please login",
+    "BadGateway502": "Bad Gateway, please try later"
+  },
   "Locale": {
     "en-US": "english/US",
     "zh-CN": "中文/简体"

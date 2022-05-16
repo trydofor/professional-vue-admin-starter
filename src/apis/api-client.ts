@@ -123,6 +123,8 @@ const clientConfig: AxiosClientConfig = {
         globalEvent.emit('Captcha', error);
       } else if (status === httpRighter) {
         globalEvent.emit('Righter', error);
+      } else if (status === 502) {
+        globalEvent.emit('BadGateway', error);
       } else {
         globalEvent.emit('ApiError', error);
       }
