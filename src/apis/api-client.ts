@@ -8,6 +8,7 @@
 import { AxiosClient, AxiosClientConfig, EjectType } from '@/libs/axios-client';
 import {
   captchaCheck,
+  httpBadGate,
   httpCaptcha,
   httpDoubler,
   httpNoAuthn,
@@ -123,7 +124,7 @@ const clientConfig: AxiosClientConfig = {
         globalEvent.emit('Captcha', error);
       } else if (status === httpRighter) {
         globalEvent.emit('Righter', error);
-      } else if (status === 502) {
+      } else if (status === httpBadGate) {
         globalEvent.emit('BadGateway', error);
       } else {
         globalEvent.emit('ApiError', error);

@@ -15,7 +15,6 @@ export const enum TokenType {
   Header = 'header',
 }
 
-export const appTitle = 'Wings-Vue3-Admin';
 export const localeHeader = 'Accept-Language';
 export const zoneidHeader = 'Zone-Id';
 
@@ -32,6 +31,7 @@ export const httpNoPerms = 403;
 export const httpDoubler = 202;
 export const httpCaptcha = 406;
 export const httpRighter = 409;
+export const httpBadGate = 502;
 
 export const passLenMin = 6;
 

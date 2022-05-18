@@ -26,12 +26,12 @@ import UserLogin from '@/components/authn/UserLogin.vue';
 import OauthLogin from '@/components/authn/OauthLogin.vue';
 import { useRouter } from 'vue-router';
 import { oauthSuccess, pathIndex } from '@/configs/global';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { messageOpener } from '@/libs/popup-window';
 import { useI18n } from '@/locale';
 import { RouteQuery } from '@/router/router';
 import { ElMessageBox } from 'element-plus';
-import globalEvent from '@/libs/global-event';
+import { eventSwitch } from '@/libs/global-event';
 
 const { t } = useI18n();
 
@@ -45,6 +45,15 @@ function doClose() {
   messageOpener(oauthSuccess);
 }
 
+const eventSwitches = [
+  eventSwitch('ApiError', err => {
+    ElMessageBox.alert(err.message, 'Warning');
+  }),
+  eventSwitch('BadGateway', () => {
+    ElMessageBox.alert(t('Error.BadGateway502'), 'Warning');
+  }),
+];
+
 onMounted(() => {
   const hash = window.location.hash;
   if (hash.includes(RouteQuery.Success)) {
@@ -55,13 +64,12 @@ onMounted(() => {
   } else if (hash.includes(RouteQuery.BadGateway)) {
     ElMessageBox.alert(t('Error.BadGateway502'), 'Warning');
   }
+
+  eventSwitches.forEach(it => it.on());
 });
 
-globalEvent.on('ApiError', err => {
-  ElMessageBox.alert(err.message, 'Warning');
-});
-globalEvent.on('BadGateway', () => {
-  ElMessageBox.alert(t('Error.BadGateway502'), 'Warning');
+onUnmounted(() => {
+  eventSwitches.forEach(it => it.off());
 });
 </script>
 

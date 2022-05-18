@@ -23,45 +23,56 @@
 <script setup lang="ts">
 import AsideMenu from '@/components/layout/AsideMenu.vue';
 import AtopNavbar from '@/components/layout/AtopNavbar.vue';
-import globalEvent from '@/libs/global-event';
+import { eventSwitch } from '@/libs/global-event';
 import { ElMessage } from 'element-plus';
 import LoginDialog from '@/components/dialog/LoginDialog.vue';
 import logger from '@/libs/logger';
 import CaptchaDialog from '@/components/dialog/CaptchaDialog.vue';
 import { cachingView } from '@/configs/global';
 import { useI18n } from '@/locale';
+import { onMounted, onUnmounted } from 'vue';
 
 // caching view 等待新版本支持matchBy key
 const { t } = useI18n();
 
 // global event
-globalEvent.on('Failure', err => {
-  logger.warn('Failure', err);
-  ElMessage.error(err.message);
+const eventSwitches = [
+  eventSwitch('Failure', err => {
+    logger.warn('Failure', err);
+    ElMessage.error(err.message);
+  }),
+  eventSwitch('ApiError', err => {
+    logger.warn('ApiError', err);
+    ElMessage.error(err.response?.data?.message || err.message);
+  }),
+  eventSwitch('NetError', err => {
+    logger.warn('NetError', err);
+    ElMessage.error(err.message);
+  }),
+  eventSwitch('DblError', err => {
+    logger.info('DblError', err);
+    ElMessage.warning(err.message);
+  }),
+  eventSwitch('NoPerms', err => {
+    logger.info('NoPerms', err);
+    ElMessage.warning('permission denied');
+  }),
+  eventSwitch('Righter', err => {
+    logger.info('Righter', err);
+    ElMessage.warning('invalid editor data');
+  }),
+  eventSwitch('BadGateway', err => {
+    logger.info('BadGateway', err);
+    ElMessage.warning(t('Error.BadGateway502'));
+  }),
+];
+
+onMounted(() => {
+  eventSwitches.forEach(it => it.on());
 });
-globalEvent.on('ApiError', err => {
-  logger.warn('ApiError', err);
-  ElMessage.error(err.response?.data?.message || err.message);
-});
-globalEvent.on('NetError', err => {
-  logger.warn('NetError', err);
-  ElMessage.error(err.message);
-});
-globalEvent.on('DblError', err => {
-  logger.info('DblError', err);
-  ElMessage.warning(err.message);
-});
-globalEvent.on('NoPerms', err => {
-  logger.info('NoPerms', err);
-  ElMessage.warning('permission denied');
-});
-globalEvent.on('Righter', err => {
-  logger.info('Righter', err);
-  ElMessage.warning('invalid editor data');
-});
-globalEvent.on('BadGateway', err => {
-  logger.info('BadGateway', err);
-  ElMessage.warning(t('Error.BadGateway502'));
+
+onUnmounted(() => {
+  eventSwitches.forEach(it => it.off());
 });
 </script>
 

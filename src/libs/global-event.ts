@@ -5,7 +5,7 @@
  * @see {@link http://github.com/trydofor | trydofor}
  */
 
-import mitt, { Emitter } from 'mitt';
+import mitt, { Emitter, Handler } from 'mitt';
 import { AxiosError } from 'axios';
 
 /**
@@ -26,5 +26,16 @@ export type Events = {
 };
 
 const globalEvent: Emitter<Events> = mitt();
+
+export function eventSwitch<K extends keyof Events>(type: K, handler: Handler<Events[K]>) {
+  return {
+    on: () => {
+      globalEvent.on(type, handler);
+    },
+    off: () => {
+      globalEvent.off(type, handler);
+    },
+  };
+}
 
 export default globalEvent;
