@@ -80,7 +80,7 @@ export class AxiosClient {
 
   public request<R>(conf: AxiosRequestConfig): Promise<AxiosResponse<R>> {
     const options: AxiosClientConfig = Object.assign({}, this.defaultConfig, conf);
-    if (this.isDoubleClick(conf)) {
+    if (this.isDoubleClick(options)) {
       const err: AxiosError = Object.assign(new Error('duplicate request with same data'), {
         config: options as AxiosRequestConfig,
         isAxiosError: false,
