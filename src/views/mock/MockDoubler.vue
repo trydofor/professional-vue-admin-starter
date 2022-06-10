@@ -5,19 +5,28 @@
       <el-button type="primary" @click="mockDoubler(5)">Sleep5</el-button>
     </div>
     <div class="wg-box-block">
-      <el-button type="primary" @click="debounce">Debounce500</el-button>
+      <el-button type="primary" @click="debounce(500)">Debounce500</el-button>
+      <el-button type="primary" @click="debounce(0)">Debounce0</el-button>
+    </div>
+    <div class="wg-box-block">
+      <el-button v-waiting="1000" type="primary" @click="waiting">Waiting1000</el-button>
+      <el-tag v-waiting="1000" style="margin: 1em" @click="waiting">Waiting1000</el-tag>
+      <el-checkbox v-waiting="1000">Waiting1000</el-checkbox>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { mockDoubler, mockStatus } from '@/apis/mock/mock-data';
+import { ElMessage } from 'element-plus';
 
-function debounce() {
-  console.log(mockStatus, 1);
-  mockStatus(200);
-  console.log(mockStatus, 2);
-  mockStatus(200);
+function debounce(w: number) {
+  mockStatus(200, w);
+  mockStatus(200, w);
+}
+
+function waiting() {
+  ElMessage.info('waiting');
 }
 </script>
 

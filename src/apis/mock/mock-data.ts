@@ -32,9 +32,9 @@ export function mockDoubler(sleep: number): void {
   });
 }
 
-export function mockStatus(status: number): void {
+export function mockStatus(status: number, waiting = 500): void {
   const url = '/mock/echo0o0.json?status=' + status;
-  client.dataForm(url).then(it => {
+  client.dataForm(url, undefined, { duplicateInterval: waiting }).then(it => {
     logger.debug('mock status', status, it);
   });
 }

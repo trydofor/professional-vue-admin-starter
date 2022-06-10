@@ -7,6 +7,7 @@ import '@/styles/element.scss';
 import ElementPlus from 'element-plus';
 import App from './App.vue';
 import permit from '@/directives/permit';
+import waiting from '@/directives/waiting';
 import VueI18n from '@/locale';
 import * as Sentry from '@sentry/vue';
 import { sentryDsn, sentryRate } from '@/configs/global';
@@ -18,6 +19,7 @@ Vue.use(router);
 Vue.use(ElementPlus);
 Vue.use(VueI18n);
 Vue.directive('permit', permit);
+Vue.directive('waiting', waiting);
 
 // BGN sentry
 if (sentryDsn) {
