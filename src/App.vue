@@ -14,6 +14,6 @@ const i18n = useI18n();
 globalEvent.on('SetLocale', it => {
   logger.log('SetLocale', it);
   localeMessage.value = getLocaleMessage(it);
-  i18n.locale.value = it;
+  i18n.locale.value = it as 'en-US';
 });
 </script>

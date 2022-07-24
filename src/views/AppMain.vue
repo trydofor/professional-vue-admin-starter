@@ -31,6 +31,7 @@ import CaptchaDialog from '@/components/dialog/CaptchaDialog.vue';
 import { cachingView } from '@/configs/global';
 import { useI18n } from '@/locale';
 import { onMounted, onUnmounted } from 'vue';
+import { Result } from '@/apis/api-client';
 
 // caching view 等待新版本支持matchBy key
 const { t } = useI18n();
@@ -43,7 +44,7 @@ const eventSwitches = [
   }),
   eventSwitch('ApiError', err => {
     logger.warn('ApiError', err);
-    ElMessage.error(err.response?.data?.message || err.message);
+    ElMessage.error((err.response?.data as Result<unknown>)?.message || err.message);
   }),
   eventSwitch('NetError', err => {
     logger.warn('NetError', err);

@@ -4,8 +4,7 @@
  * @since 2021-11-17
  * @see {@link http://github.com/trydofor | trydofor}
  */
-import { Directive } from 'vue';
-import { DirectiveBinding } from '@vue/runtime-core';
+import { Directive, DirectiveBinding } from 'vue';
 import { hasPermit } from '@/libs/permit-helper';
 
 export default {
