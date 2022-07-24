@@ -10,8 +10,10 @@ import permit from '@/directives/permit';
 import waiting from '@/directives/waiting';
 import VueI18n from '@/locale';
 import * as Sentry from '@sentry/vue';
-import { sentryDsn, sentryRate } from '@/configs/global';
+import { appRuntime, RunMode, runModeStyle, sentryDsn, sentryRate } from '@/configs/global';
+import axios from 'axios';
 
+const appId = 'app';
 const Vue = createApp(App);
 // use `Vue` for IDE compatible with Vue2
 Vue.use(store, key);
@@ -40,4 +42,20 @@ if (sentryDsn) {
 }
 // END sentry
 
-Vue.mount('#app');
+Vue.mount('#' + appId);
+
+//
+axios
+  .get('/test/envs/run-mode.json')
+  .then(res => {
+    const rmd = res.data?.data as RunMode;
+    const sty = runModeStyle.get(rmd);
+    if (sty) {
+      const app = document.getElementById(appId) as HTMLDivElement;
+      app.style.borderTop = sty;
+      appRuntime.runMode = rmd;
+    }
+  })
+  .catch(() => {
+    // ignore
+  });

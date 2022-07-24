@@ -54,3 +54,19 @@ export const atopTabsWidth = 700;
 
 export const sentryDsn = '';
 export const sentryRate = isProduction ? 0.25 : 1.0;
+
+//
+export const enum RunMode {
+  Product = 'Product',
+  Test = 'Test',
+  Develop = 'Develop',
+  Local = 'Local',
+}
+
+export const runModeStyle = new Map<RunMode, string>();
+runModeStyle.set(RunMode.Product, '');
+runModeStyle.set(RunMode.Test, '3px solid #fb9b5f');
+runModeStyle.set(RunMode.Develop, '3px solid #2196f3');
+runModeStyle.set(RunMode.Local, '3px solid #3eaf7c');
+
+export const appRuntime = { runMode: RunMode.Product };
