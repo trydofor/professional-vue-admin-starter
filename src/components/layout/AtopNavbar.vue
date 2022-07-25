@@ -48,20 +48,23 @@
 <script setup lang="ts">
 import { onBeforeRouteUpdate, RouteLocationNormalized, useRoute, useRouter } from 'vue-router';
 import avatar from '@/assets/images/user.png';
-import { useStore } from '@/store';
 import { computed, onMounted, ref } from 'vue';
 import { logout } from '@/apis/authn/login';
 import { switchLocale, tryInit } from '@/apis/authn/setting';
 import { atopMenuWidth, atopSettingWidth, atopTabsWidth, pathLogin } from '@/configs/global';
 import { I18nKey, standardLocale, supportLocales, useI18n } from '@/locale';
 import globalEvent from '@/libs/global-event';
-import { ViewData } from '@/store/modules/caching/state';
+import { useCachingStore, ViewData } from '@/store/caching';
+import { useSettingStore } from '@/store/setting';
+import { useAuthnStore } from '@/store/authn';
 
 const i18n = useI18n();
 const t = i18n.t;
 const router = useRouter();
 const route = useRoute();
-const store = useStore();
+const cachingStore = useCachingStore();
+const settingStore = useSettingStore();
+const authnStore = useAuthnStore();
 
 const atopDivElement = ref<HTMLDivElement>();
 // tag view
@@ -69,10 +72,10 @@ const tabsWidth = ref(atopTabsWidth);
 const tabActive = ref('');
 const tagViews = computed({
   get() {
-    return store.state.caching.views;
+    return cachingStore.views;
   },
   set(tbs) {
-    store.commit('caching/setView', tbs);
+    cachingStore.views = tbs;
   },
 });
 
@@ -100,7 +103,7 @@ function calcTabs(rt?: RouteLocationNormalized) {
   if (rt) {
     const path = rt.fullPath;
     const tips = rt.meta.tipsFunc?.(rt);
-    store.commit('caching/addView', { path: path, name: rt.name, tips: tips });
+    cachingStore.addView({ path: path, name: rt.name as string, tips: tips as string });
     tabActive.value = path;
   }
 }
@@ -114,7 +117,7 @@ function doTagClick() {
 
 function doTagClose(path: string) {
   if (route.fullPath === path) {
-    const views = store.state.caching.views;
+    const views = cachingStore.views;
     const idx = views.findIndex(it => it.path === path);
     if (idx >= 0) {
       if (idx - 1 >= 0) {
@@ -124,13 +127,13 @@ function doTagClose(path: string) {
       }
     }
   }
-  store.commit('caching/delView', path);
+  cachingStore.delView(path);
 }
 
 // setting
-const username = computed(() => store.state.authn.name || '-');
-const language = computed(() => standardLocale(store.state.setting.locale));
-const timezone = computed(() => store.state.setting.zoneid || '-');
+const username = computed(() => authnStore.name || '-');
+const language = computed(() => standardLocale(settingStore.locale));
+const timezone = computed(() => settingStore.zoneid || '-');
 
 const showDialogLocale = ref(false);
 const currentLocale = ref('');
@@ -151,7 +154,7 @@ function doLocaleClose(): void {
 function doLocaleChange(): void {
   const lc = currentLocale.value;
   switchLocale(lc, () => {
-    store.commit('setting/locale', lc);
+    settingStore.locale = lc;
     globalEvent.emit('SetLocale', lc);
     showDialogLocale.value = false;
   });

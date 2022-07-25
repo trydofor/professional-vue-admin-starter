@@ -29,10 +29,10 @@ import { useRouter } from 'vue-router';
 import { RouteName } from '@/router/router';
 import { MenuItem } from '@/components/layout/AsideMenu';
 import { Opportunity } from '@element-plus/icons-vue';
-import { useStore } from '@/store';
 import { ref } from 'vue';
+import { useCachingStore } from '@/store/caching';
 
-const store = useStore();
+const cachingStore = useCachingStore();
 const router = useRouter();
 
 function onAddTab() {
@@ -52,7 +52,7 @@ function onAddMenu() {
     });
   }
 
-  store.commit('caching/addMenu', [
+  cachingStore.addMenu([
     {
       title: 'Menu.MockFunction.DynamicAdd',
       icon: Opportunity,
@@ -65,7 +65,7 @@ function onAddMenu() {
 
 function onDelMenu() {
   const index = 'Menu.Test-' + menuCount;
-  store.commit('caching/delMenu', index);
+  cachingStore.delMenu(index);
   menuCount--;
 }
 
@@ -77,10 +77,11 @@ function onMenuBadge(step: number) {
   badgeCount += step;
   const value = step == 0 ? badgeValue.value : badgeCount;
   badgeType.value = types[Math.abs(badgeCount % types.length)];
-  store.commit('caching/setMenu', {
+  cachingStore.modMenu({
     index: '/mock-others',
     badge: {
       value: value,
+      // @ts-ignore
       type: badgeType.value,
     },
   });

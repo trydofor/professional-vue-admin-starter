@@ -17,13 +17,12 @@ import OauthLogin from '@/components/authn/OauthLogin.vue';
 import globalEvent from '@/libs/global-event';
 import { pathLogin } from '@/configs/global';
 import { useRouter } from 'vue-router';
-import { useStore } from '@/store';
 import { ref } from 'vue';
 import { useI18n } from '@/locale';
+import { useAuthnStore } from '@/store/authn';
 
 const { t } = useI18n();
 const router = useRouter();
-const store = useStore();
 
 // dialog
 const visible = ref(false);
@@ -32,7 +31,7 @@ function doClose() {
 }
 
 globalEvent.on('NoAuthn', () => {
-  if (store.state.authn.token) {
+  if (useAuthnStore().token) {
     if (!visible.value) {
       visible.value = true;
     }

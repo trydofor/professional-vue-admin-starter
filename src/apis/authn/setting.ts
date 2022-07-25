@@ -8,11 +8,12 @@
  */
 
 import client, { Result } from '@/apis/api-client';
-import { refStore } from '@/store';
 import globalEvent from '@/libs/global-event';
 import debounce from 'lodash/debounce';
 import { standardLocale } from '@/locale';
 import logger from '@/libs/logger';
+import { useAuthnStore } from '@/store/authn';
+import { useSettingStore } from '@/store/setting';
 
 export const tryInit = debounce(() => {
   initUser();
@@ -29,8 +30,9 @@ interface InfoData {
 }
 
 export function initUser(force = false): void {
-  const store = refStore();
-  if (!force && store.state.authn.name && store.state.setting.locale) {
+  const authnStore = useAuthnStore();
+  const settingStore = useSettingStore();
+  if (!force && authnStore.name && settingStore.locale) {
     return;
   }
 
@@ -44,25 +46,25 @@ export function initUser(force = false): void {
 
     // authn state
     const token = data.token;
-    if (token && store.state.authn.token !== token) {
-      store.commit('authn/token', token);
+    if (token && authnStore.token !== token) {
+      authnStore.token = token;
     }
 
     const nickname = data.nickname;
-    if (nickname && store.state.authn.name !== nickname) {
-      store.commit('authn/name', nickname);
+    if (nickname && authnStore.name !== nickname) {
+      authnStore.name = nickname;
     }
 
     // setting state
     const locale = standardLocale(data.locale);
-    if (locale && store.state.setting.locale !== locale) {
-      store.commit('setting/locale', locale);
+    if (locale && settingStore.locale !== locale) {
+      settingStore.locale = locale;
       globalEvent.emit('SetLocale', locale);
     }
 
     const zoneid = data.zoneid;
-    if (zoneid && store.state.setting.zoneid !== zoneid) {
-      store.commit('setting/zoneid', zoneid);
+    if (zoneid && settingStore.zoneid !== zoneid) {
+      settingStore.zoneid = zoneid;
     }
   });
 }

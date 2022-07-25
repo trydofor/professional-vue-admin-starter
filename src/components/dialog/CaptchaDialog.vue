@@ -32,17 +32,15 @@ import logger from '@/libs/logger';
 import { ref, watchEffect } from 'vue';
 import { onlyPath, questUrl } from '@/libs/captcha';
 import apiClient from '@/apis/api-client';
-import { useStore } from '@/store';
 import { Check, Clock, Refresh } from '@element-plus/icons-vue';
 import { useI18n } from '@/locale';
+import { useAuthnStore } from '@/store/authn';
 
 const { t } = useI18n();
 const visible = ref(false);
 const captchaUrl = ref('');
 const verifyCode = ref('');
 const imageSrc = ref('');
-
-const store = useStore();
 
 watchEffect(() => {
   apiClient.getBlobUrl(captchaUrl.value).then(it => {
@@ -63,10 +61,10 @@ function doCommit() {
   apiClient.getBlob(url).then(it => {
     if (it.size <= 0) {
       logger.info('captcha is good');
-      store.commit('authn/captcha', {
+      useAuthnStore().captcha = {
         path: onlyPath(captchaUrl.value),
         code: verifyCode.value,
-      });
+      };
       doClose();
     } else {
       imageSrc.value = URL.createObjectURL(it);

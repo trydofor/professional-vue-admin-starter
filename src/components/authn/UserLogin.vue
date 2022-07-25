@@ -30,7 +30,8 @@ import { EmptyResult, emptySuccess } from '@/apis/api-client';
 import { emptyFunction } from '@/libs/empty';
 import { useI18n } from '@/locale';
 import { isProduction, localeDefault, passLenMin } from '@/configs/global';
-import { useStore } from '@/store';
+import { useAuthnStore } from '@/store/authn';
+import { useSettingStore } from '@/store/setting';
 
 const props = withDefaults(
   defineProps<{
@@ -73,10 +74,9 @@ function focusPassword() {
   passRef.value?.focus();
 }
 
-const store = useStore();
 function justTest() {
-  store.commit('authn/name', 'test-only');
-  store.commit('setting/locale', localeDefault);
+  useAuthnStore().name = 'test-only';
+  useSettingStore().locale = localeDefault;
   props?.doSuccess(emptySuccess);
 }
 

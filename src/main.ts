@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 import router from './router';
-import { key, store } from './store';
 import 'normalize.css';
 import '@/styles/main.scss';
 import '@/styles/element.scss';
@@ -12,11 +11,12 @@ import VueI18n from '@/locale';
 import * as Sentry from '@sentry/vue';
 import { appRuntime, RunMode, runModeStyle, sentryDsn, sentryRate } from '@/configs/global';
 import axios from 'axios';
+import { createPinia } from 'pinia';
 
 const appId = 'app';
 const Vue = createApp(App);
 // use `Vue` for IDE compatible with Vue2
-Vue.use(store, key);
+Vue.use(createPinia());
 Vue.use(router);
 Vue.use(ElementPlus);
 Vue.use(VueI18n);

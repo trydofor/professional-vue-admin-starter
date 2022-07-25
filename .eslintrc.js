@@ -20,6 +20,7 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
     // https://eslint.vuejs.org/rules/
     'vue/max-attributes-per-line': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
   // https://eslint.vuejs.org/user-guide/#compiler-macros-such-as-defineprops-and-defineemits-are-warned-by-no-undef-rule
   globals: {

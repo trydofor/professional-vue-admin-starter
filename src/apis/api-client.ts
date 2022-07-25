@@ -21,10 +21,11 @@ import {
   zoneidHeader,
 } from '@/configs/global';
 import globalEvent from '@/libs/global-event';
-import { refStore } from '@/store';
 import logger from '@/libs/logger';
 import { matchPath } from '@/libs/captcha';
 import { ciGet } from '@/libs/objects';
+import { useAuthnStore } from '@/store/authn';
+import { useSettingStore } from '@/store/setting';
 
 export interface Result<T> {
   success: boolean;
@@ -51,19 +52,18 @@ export const emptySuccess: EmptyResult = { success: true };
 export const emptyFailure: EmptyResult = { success: false };
 
 const clientConfig: AxiosClientConfig = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   withCredentials: tokenSend === TokenType.Cookie,
   duplicateInterval: 500,
   interceptRequest(config) {
-    const store = refStore();
-    const token = store.state.authn.token;
+    const authnStore = useAuthnStore();
+    const token = authnStore.token;
     if (config.headers == null) config.headers = {};
 
     if (token && tokenName && tokenSend === TokenType.Header) {
       config.headers[tokenName] = token;
     }
-    const captcha = store.state.authn.captcha;
+    const captcha = authnStore.captcha;
     if (matchPath(config.url, captcha?.path) && captcha?.code) {
       logger.info('find captcha for', config.url, captcha);
       if (config.params) {
@@ -72,11 +72,12 @@ const clientConfig: AxiosClientConfig = {
         config.params = { [captchaCheck]: captcha?.code };
       }
     }
-    const zoneid = store.state.setting.zoneid;
+    const settingStore = useSettingStore();
+    const zoneid = settingStore.zoneid;
     if (zoneid && zoneidHeader) {
       config.headers[zoneidHeader] = zoneid;
     }
-    const locale = store.state.setting.locale;
+    const locale = settingStore.locale;
     if (locale && localeHeader) {
       config.headers[localeHeader] = locale;
     }
@@ -84,8 +85,8 @@ const clientConfig: AxiosClientConfig = {
   },
   interceptResponse(response) {
     if (response.config?.params?.[captchaCheck] && response.status == 200) {
-      const store = refStore();
-      store.commit('authn/captcha', {});
+      const authnStore = useAuthnStore();
+      authnStore.captcha = {};
     }
     const result = response.data;
     if (result == null) {

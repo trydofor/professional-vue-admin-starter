@@ -9,7 +9,6 @@
 
 import client, { Result } from '@/apis/api-client';
 import md5 from 'js-md5';
-import { refStore } from '@/store';
 import { tokenName } from '@/configs/global';
 import Cookies from 'js-cookie';
 import { emptyFunction } from '@/libs/empty';
@@ -17,6 +16,7 @@ import { Permit, Required } from '@/configs/permit';
 import { setPermit } from '@/libs/permit-helper';
 import logger from '@/libs/logger';
 import { ciGet } from '@/libs/objects';
+import { useAuthnStore } from '@/store/authn';
 
 export interface LoginForm {
   authType: string;
@@ -32,7 +32,7 @@ export interface LoginData {
 export function login(data: LoginForm, doSuccess: (result: Result<LoginData>) => void): void {
   const url = `/auth/${data.authType}/login.json`;
   const form = { username: data.username, password: md5(data.password) };
-  const store = refStore();
+  const authnStore = useAuthnStore();
   client.postForm<Result<LoginData>>(url, form).then(response => {
     const result = response.data;
     if (!result.success) {
@@ -47,7 +47,7 @@ export function login(data: LoginForm, doSuccess: (result: Result<LoginData>) =>
       Cookies.get(tokenName.toLowerCase());
 
     if (token) {
-      store.commit('authn/token', token);
+      authnStore.token = token;
     }
     initPerm(err => {
       if (err) {
@@ -83,6 +83,5 @@ export function oauth(type: string, state: string[], host: string, doSuccess: (r
 
 export function logout(): void {
   client.postForm('/auth/logout.json').then(emptyFunction);
-  const store = refStore();
-  store.commit('authn/logout');
+  useAuthnStore().doLogout();
 }
