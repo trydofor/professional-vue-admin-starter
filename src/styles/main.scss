@@ -1,13 +1,14 @@
 :root{
   --wg-navbar-height : 40px;
   --wg-box-wrapper-pad : 10px;
+  --wg-box-wrapper-bgcolor : #eef0f4;
 }
 body{
   color:var(--el-text-color-regular)
 }
 
 .wg-box-wrapper {
-  background-color: #eef0f4;
+  background-color: var(--wg-box-wrapper-bgcolor);
   padding: var(--wg-box-wrapper-pad) 0 0 var(--wg-box-wrapper-pad);
 
   .wg-box-block {

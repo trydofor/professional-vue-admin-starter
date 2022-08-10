@@ -9,11 +9,12 @@ import permit from '@/directives/permit';
 import waiting from '@/directives/waiting';
 import VueI18n from '@/locale';
 import * as Sentry from '@sentry/vue';
-import { appRuntime, RunMode, runModeStyle, sentryDsn, sentryRate } from '@/configs/global';
+import { appRuntime, sentryDsn, sentryRate } from '@/configs/global';
 import axios from 'axios';
 import { createPinia } from 'pinia';
+import logger from '@/libs/logger';
+import { changeRunMode, RunMode } from '@/libs/runmode';
 
-const appId = 'app';
 const Vue = createApp(App);
 // use `Vue` for IDE compatible with Vue2
 Vue.use(createPinia());
@@ -42,20 +43,14 @@ if (sentryDsn) {
 }
 // END sentry
 
-Vue.mount('#' + appId);
+Vue.mount('#app');
 
 //
 axios
-  .get('/test/envs/run-mode.json')
+  .get(appRuntime.modeUrl)
   .then(res => {
-    const rmd = res.data?.data as RunMode;
-    const sty = runModeStyle.get(rmd);
-    if (sty) {
-      const app = document.getElementById(appId) as HTMLDivElement;
-      app.style.borderTop = sty;
-      appRuntime.runMode = rmd;
-    }
+    changeRunMode(res.data?.data as RunMode);
   })
-  .catch(() => {
-    // ignore
+  .catch(e => {
+    logger.info('unknown RunMode', e);
   });

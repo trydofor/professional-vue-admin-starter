@@ -17,7 +17,10 @@
       <el-button type="primary" class="wg-wid-full" @click="submitLogin">{{ t('Login.Submit') }}</el-button>
     </el-form-item>
     <el-form-item v-if="!isProduction">
-      <el-button type="success" class="wg-wid-full" @click="justTest">ForTest</el-button>
+      <el-select v-model="runModeTest" placeholder="runMode" @change="onRunMode">
+        <el-option v-for="item in runModeOpts" :key="item" :value="item" />
+      </el-select>
+      <el-button type="success" @click="loginTest">ForTest</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -32,6 +35,7 @@ import { useI18n } from '@/locale';
 import { isProduction, localeDefault, passLenMin } from '@/configs/global';
 import { useAuthnStore } from '@/store/authn';
 import { useSettingStore } from '@/store/setting';
+import { changeRunMode, RunMode } from '@/libs/runmode';
 
 const props = withDefaults(
   defineProps<{
@@ -74,12 +78,6 @@ function focusPassword() {
   passRef.value?.focus();
 }
 
-function justTest() {
-  useAuthnStore().name = 'test-only';
-  useSettingStore().locale = localeDefault;
-  props?.doSuccess(emptySuccess);
-}
-
 function submitLogin() {
   formRef.value.validate((valid: unknown) => {
     if (valid) {
@@ -100,5 +98,17 @@ function submitLogin() {
       return false;
     }
   });
+}
+
+// test
+const runModeTest = ref(RunMode.Product);
+const runModeOpts = [RunMode.Product, RunMode.Test, RunMode.Develop, RunMode.Local];
+function onRunMode() {
+  changeRunMode(runModeTest.value);
+}
+function loginTest() {
+  useAuthnStore().name = 'test-only';
+  useSettingStore().locale = localeDefault;
+  props?.doSuccess(emptySuccess);
 }
 </script>

@@ -1,5 +1,7 @@
 // noinspection AllyPlainJsInspection
 
+import { AppRuntime, RunMode } from '@/libs/runmode';
+
 /**
  * @file global config
  * @author trydofor
@@ -55,18 +57,28 @@ export const atopTabsWidth = 700;
 export const sentryDsn = '';
 export const sentryRate = isProduction ? 0.25 : 1.0;
 
-//
-export const enum RunMode {
-  Product = 'Product',
-  Test = 'Test',
-  Develop = 'Develop',
-  Local = 'Local',
-}
-
-export const runModeStyle = new Map<RunMode, string>();
-runModeStyle.set(RunMode.Product, '');
-runModeStyle.set(RunMode.Test, '3px solid #fb9b5f');
-runModeStyle.set(RunMode.Develop, '3px solid #2196f3');
-runModeStyle.set(RunMode.Local, '3px solid #3eaf7c');
-
-export const appRuntime = { runMode: RunMode.Product };
+export const appRuntime = {
+  runMode: RunMode.Product,
+  modeUrl: '/test/envs/run-mode.json', // {"success":true,"data":"Local"}
+  element: {
+    enabled: true,
+    id: 'app',
+    style: 'borderTop',
+    value: [
+      [RunMode.Product, ''],
+      [RunMode.Test, '3px solid #fb9b5f'],
+      [RunMode.Develop, '3px solid #2196f3'],
+      [RunMode.Local, '3px solid #3eaf7c'],
+    ],
+  },
+  rootvar: {
+    enabled: true,
+    name: '--wg-box-wrapper-bgcolor',
+    value: [
+      [RunMode.Product, ''],
+      [RunMode.Test, '#fb9b5f'],
+      [RunMode.Develop, '#2196f3'],
+      [RunMode.Local, '#3eaf7c'],
+    ],
+  },
+} as AppRuntime;
