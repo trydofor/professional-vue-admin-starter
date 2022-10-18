@@ -49,8 +49,10 @@
       "NeedCaptcha": "验证码",
       "RightEditor": "防篡改",
       "SentryError": "犯个错",
-      "OthersTest": "其他的",
       "DynamicAdd": "动态{key}"
+    },
+    "MockSingleton": {
+      "_": "模拟单例"
     }
   },
   "Router": {

@@ -49,8 +49,10 @@
       "NeedCaptcha": "Need Captcha",
       "RightEditor": "Right Editor",
       "SentryError": "Sentry Error",
-      "OthersTest": "Others Test",
       "DynamicAdd": "Dynamic {key}"
+    },
+    "MockSingleton": {
+      "_": "Mock Singleton"
     }
   },
   "Router": {

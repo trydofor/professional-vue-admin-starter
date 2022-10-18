@@ -58,15 +58,6 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/mock-others',
-    name: RouteName.MockOthers,
-    component: () => import('@/views/mock/MockOthers.vue'),
-    meta: {
-      menuGroup: MenuGroup.MockFunction,
-      menuName: menuItem(MenuGroup.MockFunction, 'OthersTest'),
-    },
-  },
-  {
     path: '/mock-detail/:id',
     name: RouteName.MockDetail,
     component: () => import('@/views/mock/MockDetail.vue'),
@@ -74,6 +65,15 @@ const routes: RouteRecordRaw[] = [
       menuGroup: MenuGroup.MockFunction,
       menuBase: menuItem(MenuGroup.MockFunction, 'OthersTest'),
       tipsFunc: rt => right(rt.params.id, 6),
+    },
+  },
+  {
+    path: '/mock-others',
+    name: RouteName.MockOthers,
+    component: () => import('@/views/mock/MockOthers.vue'),
+    meta: {
+      menuGroup: MenuGroup.MockSingleton,
+      menuName: menuItem(MenuGroup.MockSingleton, 'OthersTest'),
     },
   },
 ];

@@ -57,6 +57,7 @@ import globalEvent from '@/libs/global-event';
 import { useCachingStore, ViewData } from '@/store/caching';
 import { useSettingStore } from '@/store/setting';
 import { useAuthnStore } from '@/store/authn';
+import { TabsPaneContext } from 'element-plus';
 
 const i18n = useI18n();
 const t = i18n.t;
@@ -108,8 +109,8 @@ function calcTabs(rt?: RouteLocationNormalized) {
   }
 }
 
-function doTagClick() {
-  const path = tabActive.value;
+function doTagClick(pane: TabsPaneContext) {
+  const path = pane.paneName;
   if (route.fullPath !== path) {
     router.push(path);
   }

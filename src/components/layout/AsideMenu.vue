@@ -44,6 +44,12 @@ const active = computed(() => {
   let tmd = null;
 
   for (const lv1 of cachingStore.menus) {
+    if (lv1.index === path) {
+      logger.debug('menu active by lv1 path', path, pthPx);
+      menuScrollBar.value?.setScrollTop(pthPx);
+      return path;
+    }
+
     const opd = menuOpened.has(lv1.index);
     pthPx += hwt;
     if (tmd == null) {
@@ -59,9 +65,9 @@ const active = computed(() => {
           }
         }
         if (lv2.index === path) {
-          logger.debug('menu active by path', path, pthPx);
+          logger.debug('menu active by lv2 path', path, pthPx);
           menuScrollBar.value?.setScrollTop(pthPx);
-          return lv2.index;
+          return path;
         }
 
         if (tmd == null && lv2.title === ttl) {
@@ -87,18 +93,20 @@ function doIconClick() {
 }
 
 function doMenuSelect(index: string, indexPath: string[]): void {
-  const top = indexPath[0];
-  const grp = cachingStore.menus.find(it => it.index === top);
-  //logger.debug(index, indexPath, menus, top, grp);
-  if (grp?.items) {
+  const grp = cachingStore.menus.find(it => it.index === indexPath[0]);
+  if (!grp) return;
+
+  let rt = grp.index;
+  if (grp.items) {
     for (const sub of grp.items) {
       if (sub.index === index) {
         logger.debug('menu select', sub);
-        router.push(sub.index);
-        return;
+        rt = sub.index;
+        break;
       }
     }
   }
+  router.push(rt);
 }
 
 const menuOpened = new Set<string>();

@@ -8,7 +8,7 @@ import { MenuItem } from '@/components/layout/AsideMenu';
 import { children } from '@/router';
 import { MenuGroup } from '@/router/router';
 import logger from '@/libs/logger';
-import { Opportunity } from '@element-plus/icons-vue';
+import { Opportunity, Position } from '@element-plus/icons-vue';
 import { isProduction } from '@/configs/global';
 import { markRaw } from 'vue';
 // 必须定义好顶层的菜单
@@ -16,12 +16,19 @@ export const menus: MenuItem[] = [];
 
 // must here
 if (!isProduction) {
-  menus.push({
-    title: MenuGroup.MockFunction,
-    icon: Opportunity,
-    index: MenuGroup.MockFunction,
-    items: [],
-  });
+  menus.push(
+    {
+      title: MenuGroup.MockFunction,
+      icon: Opportunity,
+      index: MenuGroup.MockFunction,
+      items: [],
+    },
+    {
+      title: MenuGroup.MockSingleton,
+      icon: Position,
+      index: MenuGroup.MockSingleton,
+    },
+  );
 }
 
 // 自动根据routes添加子菜单
@@ -48,10 +55,12 @@ for (const rt of children) {
       sub.index = rt.path;
       sub.permit = pmt;
     } else {
-      if (!top.items) {
-        top.items = [];
+      if (top.items) {
+        top.items.push({ title: rmu, icon: icn, index: rt.path, permit: pmt });
+      } else {
+        top.index = rt.path;
+        top.permit = pmt;
       }
-      top.items.push({ title: rmu, icon: icn, index: rt.path, permit: pmt });
     }
   }
 }

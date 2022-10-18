@@ -22,6 +22,7 @@ export const RouteQuery = {
 
 export const enum MenuGroup {
   MockFunction = 'Menu.MockFunction._',
+  MockSingleton = 'Menu.MockSingleton._',
 }
 
 export function menuItem(group: MenuGroup, name: string): string {
