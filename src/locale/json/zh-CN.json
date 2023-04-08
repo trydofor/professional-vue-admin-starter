@@ -12,7 +12,8 @@
     "Logout": "登出",
     "PlaceHolder": "请输入",
     "Refresh": "刷新",
-    "SystemName": "Wings Admin System"
+    "SystemName": "Wings Admin System",
+    "Franchisee": "加盟商无法看到的内容"
   },
   "Error": {
     "NotFound404": "页面不存在，请登录",

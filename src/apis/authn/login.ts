@@ -84,4 +84,5 @@ export function oauth(type: string, state: string[], host: string, doSuccess: (r
 export function logout(): void {
   client.postForm('/auth/logout.json').then(emptyFunction);
   useAuthnStore().doLogout();
+  sessionStorage.removeItem('franchisee');
 }

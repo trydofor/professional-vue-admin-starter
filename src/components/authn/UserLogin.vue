@@ -21,6 +21,7 @@
         <el-option v-for="item in runModeOpts" :key="item" :value="item" />
       </el-select>
       <el-button type="success" @click="loginTest">ForTest</el-button>
+      <el-button type="primary" @click="franchiseeLogin">FranchiseeLogin</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -107,6 +108,12 @@ function onRunMode() {
   changeRunMode(runModeTest.value);
 }
 function loginTest() {
+  useAuthnStore().name = 'test-only';
+  useSettingStore().locale = localeDefault;
+  props?.doSuccess(emptySuccess);
+}
+function franchiseeLogin() {
+  sessionStorage.setItem('franchisee', 'true');
   useAuthnStore().name = 'test-only';
   useSettingStore().locale = localeDefault;
   props?.doSuccess(emptySuccess);

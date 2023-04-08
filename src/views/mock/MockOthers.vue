@@ -20,7 +20,9 @@
         <el-button :type="badgeType" @click="onMenuBadge(0)">MenuBadgeInput</el-button>
       </div>
     </div>
-    <div class="wg-box-block"></div>
+    <div class="wg-box-block">
+      <p v-if="!isFranchisee()">{{ t('Common.Franchisee') }}</p>
+    </div>
   </div>
 </template>
 
@@ -31,9 +33,12 @@ import { MenuItem } from '@/components/layout/AsideMenu';
 import { Opportunity } from '@element-plus/icons-vue';
 import { ref } from 'vue';
 import { useCachingStore } from '@/store/caching';
+import { isFranchisee } from '@/libs/franchisee';
+import { useI18n } from '@/locale';
 
 const cachingStore = useCachingStore();
 const router = useRouter();
+const { t } = useI18n();
 
 function onAddTab() {
   router.push({ name: RouteName.MockDetail, params: { id: '' + new Date().getTime() } });

@@ -12,7 +12,8 @@
     "Logout": "Logout",
     "PlaceHolder": "Please input",
     "Refresh": "Refresh",
-    "SystemName": "Wings Admin System"
+    "SystemName": "Wings Admin System",
+    "Franchisee": "This is what franchisees cannot see"
   },
   "Error": {
     "NotFound404": "Page Not Found, please login",
