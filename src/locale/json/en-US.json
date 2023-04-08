@@ -78,5 +78,8 @@
     "LeastNChars": "at least {0} chars",
     "RequireEmail": "require an email",
     "RequirePassword": "require a password"
+  },
+  "Test": {
+    "Concurrency": "ConcurrencyRequest"
   }
 }
