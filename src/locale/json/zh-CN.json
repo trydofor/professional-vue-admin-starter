@@ -77,5 +77,8 @@
     "LeastNChars": "至少 {0} 字符",
     "RequireEmail": "需要邮箱",
     "RequirePassword": "需要密码"
+  },
+  "Test": {
+    "Concurrency": "并发请求"
   }
 }

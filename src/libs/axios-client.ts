@@ -72,6 +72,7 @@ export class AxiosClient {
   private lastRequestTimestamp = -1;
   private lastRequestIdentity = '';
   public axiosInstance: AxiosInstance;
+  private requests = new Map<string, number>();
 
   constructor(config: AxiosClientConfig) {
     this.defaultConfig = config;
@@ -94,8 +95,46 @@ export class AxiosClient {
       });
       options.interceptRejected?.(err, EjectType.Checker);
       return Promise.reject(err);
-    }
+    } else {
+      const id = JSON.stringify({
+        method: conf.method,
+        url: conf.url,
+        params: conf.params,
+        data: conf.data,
+      });
+      const oldRequestTime = this.requests.get(id);
+      const nowRequestTime = new Date().getTime();
+      if (oldRequestTime != null && oldRequestTime > nowRequestTime) {
+        const err: AxiosError = Object.assign(
+          new Error('duplicate requests occur during component initialization or concurrent requests'),
+          {
+            config: options as AxiosRequestConfig,
+            isAxiosError: false,
+            code: 'check-duplicate',
+            toJSON: () => {
+              return {
+                success: false,
+                message: 'duplicate requests occur during component initialization or concurrent requests',
+              };
+            },
+          },
+        );
+        return Promise.reject(err);
+      }
 
+      if (this.requests.size > 50) {
+        const tmpKey = [];
+        for (const entry of this.requests.entries()) {
+          if (entry[1] < nowRequestTime) {
+            tmpKey.push(entry[0]);
+          }
+        }
+        for (const k of tmpKey) {
+          this.requests.delete(k);
+        }
+      }
+      this.requests.set(id, nowRequestTime + 500);
+    }
     return this.axiosInstance.request(options);
   }
 
