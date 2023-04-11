@@ -82,14 +82,14 @@ export class AxiosClient {
   public request<R>(conf: AxiosRequestConfig): Promise<AxiosResponse<R>> {
     const options: AxiosClientConfig = Object.assign({}, this.defaultConfig, conf);
     if (this.isDoubleClick(options)) {
-      const err: AxiosError = Object.assign(new Error('您多次点击按钮，导致响应中断，请刷新页面后再次操作！'), {
+      const err: AxiosError = Object.assign(new Error('duplicate request with same data'), {
         config: options as AxiosRequestConfig,
         isAxiosError: false,
         code: 'check-duplicate',
         toJSON: () => {
           return {
             success: false,
-            message: '您多次点击按钮，导致响应中断，请刷新页面后再次操作！',
+            message: 'duplicate request with same data',
           };
         },
       });
@@ -105,17 +105,20 @@ export class AxiosClient {
       const oldRequestTime = this.requests.get(id);
       const nowRequestTime = new Date().getTime();
       if (oldRequestTime != null && oldRequestTime > nowRequestTime) {
-        const err: AxiosError = Object.assign(new Error('组件初始化或并发请求中出现重复请求'), {
-          config: options as AxiosRequestConfig,
-          isAxiosError: false,
-          code: 'check-duplicate',
-          toJSON: () => {
-            return {
-              success: false,
-              message: '组件初始化或并发请求中出现重复请求',
-            };
+        const err: AxiosError = Object.assign(
+          new Error('duplicate requests occur during component initialization or concurrent requests'),
+          {
+            config: options as AxiosRequestConfig,
+            isAxiosError: false,
+            code: 'check-duplicate',
+            toJSON: () => {
+              return {
+                success: false,
+                message: 'duplicate requests occur during component initialization or concurrent requests',
+              };
+            },
           },
-        });
+        );
         return Promise.reject(err);
       }
 
